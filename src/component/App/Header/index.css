@@ -1,0 +1,46 @@
+@keyframes walk {
+    from {
+        background-position: calc(0% - 135px) center;
+    }
+    to {
+        background-position: calc(100% + 135px) center;
+    }
+}
+
+.walker-container {
+    background-color: #001529;
+    width: 100%;
+    height: 64px;
+    position: relative;
+}
+
+.walker {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    background-position: calc(0% - 135px) center;
+    background-repeat: no-repeat;
+    animation-name: walk;
+    animation-duration: 12s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.archen {
+    background-image: url('./archen-walk.gif');
+    background-size: 54px 40px;
+    animation-delay: 4s;
+}
+
+.sableye {
+    background-image: url('./sableye-walk.gif');
+    background-size: 36px 50px;
+    animation-delay: 0s;
+}
+
+.totodile {
+    background-image: url('./totodile-walk.gif');
+    background-size: 46px 44x;
+    animation-delay: 8s;
+}

@@ -1,0 +1,25 @@
+{
+  "short_name": "PTCG Pulls",
+  "name": "Pokémon TCG Pulls",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 128x128 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/data",
+  "display": "standalone",
+  "theme_color": "#009000",
+  "background_color": "#e0e0c0"
+}
