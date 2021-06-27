@@ -1,5 +1,5 @@
 # Pokémon TCG Set Data Display
-Pokémon TCG Set Data Overlay is an easy-to-use web application for filtering Pokémon TCG cards and looking at useful statistics on those cards.
+Pokémon TCG Set Data Display is an easy-to-use web application for filtering Pokémon TCG cards and looking at useful statistics on those cards.
 
 ## How to Use
 The application is available at https://weedl.es/data.
