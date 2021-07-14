@@ -104,9 +104,13 @@ const filterAttacks = (card: Card, attacksFilter: AttacksFilter) => {
 };
 
 const filterAbility = (ability: Ability, abilityFilter: AbilityFilter) => {
-  const { name, text } = abilityFilter;
+  const { name, type, text } = abilityFilter;
 
   if (name.enabled && !toId(ability.name).includes(toId(name.value))) {
+    return false;
+  }
+
+  if (type.enabled && !toId(ability.type).includes(toId(type.value))) {
     return false;
   }
 

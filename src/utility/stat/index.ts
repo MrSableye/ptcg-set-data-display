@@ -58,7 +58,7 @@ export const computeOverallStats = (cards: Card[]): OverallStats => {
 export const computePokemonStats = (cards: Card[]): PokemonStats => {
   let pokemonCount = 0;
   let hp = 0;
-  let abilityCount = 0;
+  let abilityCounts: Count = { total: 0, individual: {} };
   let attackStats: AttackStats[] = [];
   let attackStatsByCost: AttackStats[] = [];
   let retreatCount = 0;
@@ -156,7 +156,15 @@ export const computePokemonStats = (cards: Card[]): PokemonStats => {
       }
   
       if (card.abilities) {
-        abilityCount++;
+        abilityCounts.total++;
+
+        card.abilities.forEach((ability) => {
+          if (!abilityCounts.individual[ability.type]) {
+            abilityCounts.individual[ability.type] = 0;
+          }
+
+          abilityCounts.individual[ability.type]++;
+        });
       }
   
       if (card.hp) {
@@ -168,7 +176,7 @@ export const computePokemonStats = (cards: Card[]): PokemonStats => {
   return {
     count: pokemonCount,
     hp,
-    abilityCount,
+    abilityCounts,
     retreatCount,
     attackStats,
     attackStatsByCost,

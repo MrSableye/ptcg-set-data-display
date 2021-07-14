@@ -49,21 +49,35 @@ const AttackStatsDisplay = ({
   <TypeBar count={attackStat.costTypeStats} />
 </div>;
 
+const AbilityDisplay = ({ stats }: { stats: PokemonStats }) => <div>
+  <Typography.Title level={2}>
+      Ability Stats
+  </Typography.Title>
+  <Row gutter={16}>
+    <Col span={4}>
+      <Statistic title="% w/ Abilities" value={round(100 * stats.abilityCounts.total / stats.count)} suffix={'%'} />
+    </Col>
+    {
+      Object.entries(stats.abilityCounts.individual).map(([typeName, typeCount]) => <Col span={4}>
+        <Statistic title={`% w/ ${typeName}`} value={round(100 * typeCount / stats.count)} suffix={'%'} />
+      </Col>)
+    }
+  </Row>
+</div>;
+
 const PokemonStatsDisplay = ({ stats }: { stats: PokemonStats }) => <div>
   <Typography.Title level={2}>
       General Stats
     </Typography.Title>
   <Row gutter={16}>
-    <Col span={4}>
+    <Col span={6}>
       <Statistic title="Average HP" value={round(stats.hp / stats.count)} />
     </Col>
-    <Col span={4}>
+    <Col span={6}>
       <Statistic title="Average Retreat" value={round(stats.retreatCount / stats.count)} />
     </Col>
-    <Col span={4}>
-      <Statistic title="% w/ Abilities" value={round(100 * stats.abilityCount / stats.count)} suffix={'%'} />
-    </Col>
   </Row>
+  <AbilityDisplay stats={stats} />
   {
     stats.attackStats.map((attackStat, attackStatIndex) => (<AttackStatsDisplay
       key={attackStatIndex}

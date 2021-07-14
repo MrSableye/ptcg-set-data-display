@@ -31,6 +31,7 @@ export type AttacksFilter = EnableableFilter<AttackFilter>[];
 
 export interface AbilityFilter {
   name: EnableableFilter<string>;
+  type: EnableableFilter<string>;
   text: EnableableFilter<string>;
 }
 

@@ -169,6 +169,7 @@ const CardFilter = ({
     enabled: false,
     value: {
       name: { enabled: false, value: '' },
+      type: { enabled: false, value: '' },
       text: { enabled: false, value: '' },
     },
   }]);

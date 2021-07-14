@@ -25,7 +25,7 @@ export interface AttackStats {
 export interface PokemonStats {
   count: number;
   hp: number;
-  abilityCount: number;
+  abilityCounts: Count;
   retreatCount: number;
   attackStats: AttackStats[];
   attackStatsByCost: AttackStats[];

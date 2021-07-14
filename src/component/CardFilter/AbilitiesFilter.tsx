@@ -75,6 +75,34 @@ const AbilityFilterDisplay = ({
       })}
     />
     <TextInput
+      label='Ability type'
+      placeholder='Ability type to match'
+      enableable={{
+        enabled: abilityfilter.value.type.enabled,
+        setEnabled: (enabled) => setAbilityFilter({
+          ...abilityfilter,
+          value: {
+            ...abilityfilter.value,
+            type: {
+              ...abilityfilter.value.type,
+              enabled,
+            }
+          },
+        })
+      }}
+      text={abilityfilter.value.type.value}
+      setText={(text) => setAbilityFilter({
+        ...abilityfilter,
+        value: {
+          ...abilityfilter.value,
+          type: {
+            enabled: abilityfilter.value.type.enabled,
+            value: text,
+          }
+        },
+      })}
+    />
+    <TextInput
       label='Effect text'
       placeholder='Effect text to match'
       enableable={{
@@ -112,6 +140,7 @@ const addNewAbilityFilter = (
     enabled: false,
     value: {
       name: { enabled: false, value: '' },
+      type: { enabled: false, value: '' },
       text: { enabled: false, value: '' },
     },
   }];
