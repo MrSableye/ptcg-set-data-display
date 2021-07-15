@@ -13,8 +13,7 @@ import {
 import {
   CheckboxLabel,
   Enableable,
-  TextInput,
-  RangeSelect,
+  ManagedFormItem,
 } from 'component/ManagedFormItem';
 
 interface AttackFilterDisplayProps {
@@ -47,9 +46,8 @@ const AttackFilterDisplay = ({
   </Button>}
 >
   <Form size='small' colon={false} labelAlign='left' labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
-    <TextInput
+    <ManagedFormItem
       label='Attack name'
-      placeholder='Attack name to match'
       enableable={{
         enabled: attackFilter.value.name.enabled,
         setEnabled: (enabled) => setAttackFilter({
@@ -63,21 +61,24 @@ const AttackFilterDisplay = ({
           },
         })
       }}
-      text={attackFilter.value.name.value}
-      setText={(text) => setAttackFilter({
-        ...attackFilter,
-        value: {
-          ...attackFilter.value,
-          name: {
-            enabled: attackFilter.value.name.enabled,
-            value: text,
-          }
-        },
-      })}
+      inputs={[{
+        type: 'textSelect',
+        prompt: 'Attack name to match',
+        text: attackFilter.value.name.value,
+        setText: (text) => setAttackFilter({
+          ...attackFilter,
+          value: {
+            ...attackFilter.value,
+            name: {
+              enabled: attackFilter.value.name.enabled,
+              value: text,
+            }
+          },
+        }),
+      }]}
     />
-    <TextInput
+    <ManagedFormItem
       label='Effect text'
-      placeholder='Effect text to match'
       enableable={{
         enabled: attackFilter.value.text.enabled,
         setEnabled: (enabled) => setAttackFilter({
@@ -91,22 +92,24 @@ const AttackFilterDisplay = ({
           },
         })
       }}
-      text={attackFilter.value.text.value}
-      setText={(text) => setAttackFilter({
-        ...attackFilter,
-        value: {
-          ...attackFilter.value,
-          text: {
-            enabled: attackFilter.value.text.enabled,
-            value: text,
-          }
-        },
-      })}
+      inputs={[{
+        type: 'textSelect',
+        prompt: 'Effect text to match',
+        text: attackFilter.value.text.value,
+        setText: (text) => setAttackFilter({
+          ...attackFilter,
+          value: {
+            ...attackFilter.value,
+            text: {
+              enabled: attackFilter.value.text.enabled,
+              value: text,
+            }
+          },
+        }),
+      }]}
     />
-    <RangeSelect
+    <ManagedFormItem
       label='Attack slot'
-      maxRange={{ min: 0, max: 2 }}
-      step={1}
       enableable={{
         enabled: attackFilter.value.slot.enabled,
         setEnabled: (enabled) => setAttackFilter({
@@ -120,22 +123,25 @@ const AttackFilterDisplay = ({
           },
         })
       }}
-      selectedRange={attackFilter.value.slot.value}
-      setSelectedRange={(range) => setAttackFilter({
-        ...attackFilter,
-        value: {
-          ...attackFilter.value,
-          slot: {
-            enabled: attackFilter.value.slot.enabled,
-            value: range,
-          }
-        },
-      })}
+      inputs={[{
+        type: 'rangeSelect',
+        maxRange: { min: 0, max: 2 },
+        step: 1,
+        selectedRange: attackFilter.value.slot.value,
+        setSelectedRange: (range) => setAttackFilter({
+          ...attackFilter,
+          value: {
+            ...attackFilter.value,
+            slot: {
+              enabled: attackFilter.value.slot.enabled,
+              value: range,
+            }
+          },
+        }),
+      }]}
     />
-    <RangeSelect
+    <ManagedFormItem
       label='Cost'
-      maxRange={{ min: 0, max: 6 }}
-      step={1}
       enableable={{
         enabled: attackFilter.value.cost.enabled,
         setEnabled: (enabled) => setAttackFilter({
@@ -149,22 +155,25 @@ const AttackFilterDisplay = ({
           },
         })
       }}
-      selectedRange={attackFilter.value.cost.value}
-      setSelectedRange={(range) => setAttackFilter({
-        ...attackFilter,
-        value: {
-          ...attackFilter.value,
-          cost: {
-            enabled: attackFilter.value.cost.enabled,
-            value: range,
-          }
-        },
-      })}
+      inputs={[{
+        type: 'rangeSelect',
+        maxRange: { min: 0, max: 6 },
+        step: 1,
+        selectedRange: attackFilter.value.cost.value,
+        setSelectedRange: (range) => setAttackFilter({
+          ...attackFilter,
+          value: {
+            ...attackFilter.value,
+            cost: {
+              enabled: attackFilter.value.cost.enabled,
+              value: range,
+            }
+          },
+        }),
+      }]}
     />
-    <RangeSelect
+    <ManagedFormItem
       label='Damage'
-      maxRange={{ min: 0, max: 1000 }}
-      step={10}
       enableable={{
         enabled: attackFilter.value.damage.enabled,
         setEnabled: (enabled) => setAttackFilter({
@@ -178,17 +187,22 @@ const AttackFilterDisplay = ({
           },
         })
       }}
-      selectedRange={attackFilter.value.damage.value}
-      setSelectedRange={(range) => setAttackFilter({
-        ...attackFilter,
-        value: {
-          ...attackFilter.value,
-          damage: {
-            enabled: attackFilter.value.damage.enabled,
-            value: range,
-          }
-        },
-      })}
+      inputs={[{
+        type: 'rangeSelect',
+        maxRange: { min: 0, max: 500 },
+        step: 10,
+        selectedRange: attackFilter.value.damage.value,
+        setSelectedRange: (range) => setAttackFilter({
+          ...attackFilter,
+          value: {
+            ...attackFilter.value,
+            damage: {
+              enabled: attackFilter.value.damage.enabled,
+              value: range,
+            }
+          },
+        }),
+      }]}
     />
   </Form>
 </Card>;

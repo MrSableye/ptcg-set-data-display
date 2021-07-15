@@ -13,7 +13,7 @@ import {
 import {
   CheckboxLabel,
   Enableable,
-  TextInput,
+  ManagedFormItem,
 } from 'component/ManagedFormItem';
 
 interface AbilityFilterDisplayProps {
@@ -46,9 +46,8 @@ const AbilityFilterDisplay = ({
   </Button>}
 >
   <Form size='small' colon={false} labelAlign='left' labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
-    <TextInput
+    <ManagedFormItem
       label='Ability name'
-      placeholder='Ability name to match'
       enableable={{
         enabled: abilityfilter.value.name.enabled,
         setEnabled: (enabled) => setAbilityFilter({
@@ -62,21 +61,24 @@ const AbilityFilterDisplay = ({
           },
         })
       }}
-      text={abilityfilter.value.name.value}
-      setText={(text) => setAbilityFilter({
-        ...abilityfilter,
-        value: {
-          ...abilityfilter.value,
-          name: {
-            enabled: abilityfilter.value.name.enabled,
-            value: text,
-          }
-        },
-      })}
+      inputs={[{
+        type: 'textSelect',
+        prompt: 'Ability name to match',
+        text: abilityfilter.value.name.value,
+        setText:( text) => setAbilityFilter({
+          ...abilityfilter,
+          value: {
+            ...abilityfilter.value,
+            name: {
+              enabled: abilityfilter.value.name.enabled,
+              value: text,
+            }
+          },
+        })
+      }]}
     />
-    <TextInput
+    <ManagedFormItem
       label='Ability type'
-      placeholder='Ability type to match'
       enableable={{
         enabled: abilityfilter.value.type.enabled,
         setEnabled: (enabled) => setAbilityFilter({
@@ -90,21 +92,24 @@ const AbilityFilterDisplay = ({
           },
         })
       }}
-      text={abilityfilter.value.type.value}
-      setText={(text) => setAbilityFilter({
-        ...abilityfilter,
-        value: {
-          ...abilityfilter.value,
-          type: {
-            enabled: abilityfilter.value.type.enabled,
-            value: text,
-          }
-        },
-      })}
+      inputs={[{
+        type: 'textSelect',
+        prompt: 'Ability type to match',
+        text: abilityfilter.value.type.value,
+        setText: (text) => setAbilityFilter({
+          ...abilityfilter,
+          value: {
+            ...abilityfilter.value,
+            type: {
+              enabled: abilityfilter.value.type.enabled,
+              value: text,
+            }
+          },
+        }),
+      }]}
     />
-    <TextInput
+    <ManagedFormItem
       label='Effect text'
-      placeholder='Effect text to match'
       enableable={{
         enabled: abilityfilter.value.text.enabled,
         setEnabled: (enabled) => setAbilityFilter({
@@ -118,17 +123,21 @@ const AbilityFilterDisplay = ({
           },
         })
       }}
-      text={abilityfilter.value.text.value}
-      setText={(text) => setAbilityFilter({
-        ...abilityfilter,
-        value: {
-          ...abilityfilter.value,
-          text: {
-            enabled: abilityfilter.value.text.enabled,
-            value: text,
-          }
-        },
-      })}
+      inputs={[{
+        type: 'textSelect',
+        prompt: 'Effect text to match',
+        text: abilityfilter.value.text.value,
+        setText: (text) => setAbilityFilter({
+          ...abilityfilter,
+          value: {
+            ...abilityfilter.value,
+            text: {
+              enabled: abilityfilter.value.text.enabled,
+              value: text,
+            }
+          },
+        }),
+      }]}
     />
   </Form>
 </Card>;

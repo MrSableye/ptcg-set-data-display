@@ -9,12 +9,7 @@ import {
   AttacksFilter,
   Filter,
 } from 'utility/filter';
-import {
-  BooleanInput,
-  MultiSelect,
-  RangeSelect,
-  TextInput,
-} from 'component/ManagedFormItem';
+import { ManagedFormItem } from 'component/ManagedFormItem';
 import AbilitiesFilterDisplay from './AbilitiesFilter';
 import AttacksFilterDisplay from './AttacksFilter';
 import { getFilters } from './helper';
@@ -61,22 +56,20 @@ const CardFilter = ({
     [supertypeFilter, setSupertypeFilter],
   ] = useStateWithEnable<string[]>(false, []);
 
-  // TODO: Handle union
   const [
     [subtypeFilterEnabled, setSubtypeFilterEnabled],
     [subtypeFilter, setSubtypeFilter],
-  ] = useStateWithEnable<string[]>(false, []);
+  ] = useStateWithEnable<{ isUnion: boolean, subtypes: string[] }>(false, { isUnion: true, subtypes: [] });
 
   const [
     [subtypeExcludeFilterEnabled, setSubtypeExcludeFilterEnabled],
     [subtypeExcludeFilter, setSubtypeExcludeFilter],
   ] = useStateWithEnable<string[]>(false, []);
 
-  // TODO: Handle union
   const [
     [typeFilterEnabled, setTypeFilterEnabled],
     [typeFilter, setTypeFilter],
-  ] = useStateWithEnable<string[]>(false, []);
+  ] = useStateWithEnable<{ isUnion: boolean, types: string[] }>(false, { isUnion: true, types: [] });
 
   const [
     [typeExcludeFilterEnabled, setTypeExcludeFilterEnabled],
@@ -195,8 +188,8 @@ const CardFilter = ({
   
     setExcludeFilters(getFilters({
       name: { enabled: nameExcludeFilterEnabled, value: nameExcludeFilter },
-      subtype: { enabled: subtypeExcludeFilterEnabled, value: subtypeExcludeFilter },
-      type: { enabled: typeExcludeFilterEnabled, value: typeExcludeFilter },
+      subtype: { enabled: subtypeExcludeFilterEnabled, value: { isUnion: true, subtypes: subtypeExcludeFilter }},
+      type: { enabled: typeExcludeFilterEnabled, value: { isUnion: true, types: typeExcludeFilter }},
       weakness: { enabled: weaknessExcludeFilterEnabled, value: weaknessExcludeFilter },
       resistance: { enabled: resistanceExcludeFilterEnabled, value: resistanceExcludeFilter },
       rarity: { enabled: rarityExcludeFilterEnabled, value: rarityExcludeFilter },
@@ -232,160 +225,243 @@ const CardFilter = ({
   return <Form size='small' colon={false} labelAlign='left' labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
     <Row gutter={16}>
       <Col span={12}>
-        <TextInput
+        <ManagedFormItem
           label='Name'
-          placeholder='Name to match'
           enableable={{ enabled: nameFilterEnabled, setEnabled: setNameFilterEnabled }}
-          text={nameFilter}
-          setText={setNameFilter}
+          inputs={[{
+            type: 'textSelect',
+            prompt: 'Name to match',
+            text: nameFilter,
+            setText: setNameFilter,
+          }]}
         />
-        <TextInput
+        <ManagedFormItem
           label='Name Exclusion'
-          placeholder='Name to filter out'
           enableable={{ enabled: nameExcludeFilterEnabled, setEnabled: setNameExcludeFilterEnabled }}
-          text={nameExcludeFilter}
-          setText={setNameExcludeFilter}
+          inputs={[{
+            type: 'textSelect',
+            prompt: 'Name to filter out',
+            text: nameExcludeFilter,
+            setText: setNameExcludeFilter,
+          }]}
         />
-        <MultiSelect
+        <ManagedFormItem
           label='Supertype'
-          placeholder='Supertypes to include'
           enableable={{ enabled: supertypeFilterEnabled, setEnabled: setSupertypeFilterEnabled }}
-          options={supertypes.map((supertype) => ({ value: supertype }))}
-          selectedOptions={supertypeFilter}
-          setSelectedOptions={setSupertypeFilter}
+          inputs={[{
+            type: 'multiSelect',
+            prompt: 'Supertypes to include',
+            options: supertypes.map((supertype) => ({ value: supertype })),
+            selectedOptions: supertypeFilter,
+            setSelectedOptions: setSupertypeFilter,
+          }]}
         />
-        <MultiSelect
+        <ManagedFormItem
           label='Subtype'
-          placeholder='Subtypes to include'
           enableable={{ enabled: subtypeFilterEnabled, setEnabled: setSubtypeFilterEnabled }}
-          options={subtypes.map((subtype) => ({ value: subtype }))}
-          selectedOptions={subtypeFilter}
-          setSelectedOptions={setSubtypeFilter}
+          inputs={[{
+            type: 'multiSelect',
+            prompt: 'Subtypes to include',
+            options: subtypes.map((subtype) => ({ value: subtype })),
+            selectedOptions: subtypeFilter.subtypes,
+            setSelectedOptions: (options) => setSubtypeFilter({
+              ...subtypeFilter,
+              subtypes: options,
+            }),
+          }, {
+            type: 'booleanSelect',
+            prompt: 'Match all subtypes?',
+            selected: !subtypeFilter.isUnion,
+            setSelected: (selected) => setSubtypeFilter({
+              ...subtypeFilter,
+              isUnion: !selected,
+            }),
+          }]}
         />
-        <MultiSelect
+        <ManagedFormItem
           label='Subtype Exclusion'
-          placeholder='Subtypes to exclude'
           enableable={{ enabled: subtypeExcludeFilterEnabled, setEnabled: setSubtypeExcludeFilterEnabled }}
-          options={subtypes.map((subtype) => ({ value: subtype }))}
-          selectedOptions={subtypeExcludeFilter}
-          setSelectedOptions={setSubtypeExcludeFilter}
+          inputs={[{
+            type: 'multiSelect',
+            prompt: 'Subtypes to exclude',
+            options: subtypes.map((subtype) => ({ value: subtype })),
+            selectedOptions: subtypeExcludeFilter,
+            setSelectedOptions: setSubtypeExcludeFilter,
+          }]}
         />
-        <MultiSelect
+        <ManagedFormItem
           label='Type'
-          placeholder='Types to include'
           enableable={{ enabled: typeFilterEnabled, setEnabled: setTypeFilterEnabled }}
-          options={types.map((type) => ({ value: type }))}
-          selectedOptions={typeFilter}
-          setSelectedOptions={setTypeFilter}
+          inputs={[{
+            type: 'multiSelect',
+            prompt: 'Types to include',
+            options: types.map((type) => ({ value: type })),
+            selectedOptions: typeFilter.types,
+            setSelectedOptions: (options) => setTypeFilter({
+              ...typeFilter,
+              types: options,
+            }),
+          }, {
+            type: 'booleanSelect',
+            prompt: 'Match all types?',
+            selected: !typeFilter.isUnion,
+            setSelected: (selected) => setTypeFilter({
+              ...typeFilter,
+              isUnion: !selected,
+            }),
+          }]}
         />
-        <MultiSelect
+        <ManagedFormItem
           label='Type Exclusion'
-          placeholder='Types to exclude'
           enableable={{ enabled: typeExcludeFilterEnabled, setEnabled: setTypeExcludeFilterEnabled }}
-          options={types.map((type) => ({ value: type }))}
-          selectedOptions={typeExcludeFilter}
-          setSelectedOptions={setTypeExcludeFilter}
+          inputs={[{
+            type: 'multiSelect',
+            prompt: 'Types to exclude',
+            options: types.map((type) => ({ value: type })),
+            selectedOptions: typeExcludeFilter,
+            setSelectedOptions: setTypeExcludeFilter,
+          }]}
         />
-        <TextInput
+        <ManagedFormItem
           label='Level'
-          placeholder='Level to match'
           enableable={{ enabled: levelFilterEnabled, setEnabled: setLevelFilterEnabled }}
-          text={levelFilter}
-          setText={setLevelFilter}
+          inputs={[{
+            type: 'textSelect',
+            prompt: 'Level to match',
+            text: levelFilter,
+            setText: setLevelFilter,
+          }]}
         />
-        <RangeSelect
+        <ManagedFormItem
           label='HP'
           enableable={{ enabled: hpFilterEnabled, setEnabled: setHpFilterEnabled }}
-          maxRange={{ min: 0, max: 350 }}
-          step={10}
-          selectedRange={hpFilter}
-          setSelectedRange={setHpFilter}
+          inputs={[{
+            type: 'rangeSelect',
+            maxRange: { min: 0, max: 350 },
+            step: 10,
+            selectedRange: hpFilter,
+            setSelectedRange: setHpFilter,
+          }]
+          }
         />
-        <RangeSelect
+        <ManagedFormItem
           label='Retreat'
           enableable={{ enabled: retreatFilterEnabled, setEnabled: setRetreatFilterEnabled }}
-          maxRange={{ min: 0, max: 5 }}
-          step={1}
-          selectedRange={retreatFilter}
-          setSelectedRange={setRetreatFilter}
+          inputs={[{
+            type: 'rangeSelect',
+            maxRange: { min: 0, max: 5 },
+            step: 1,
+            selectedRange: retreatFilter,
+            setSelectedRange: setRetreatFilter,
+          }]}
         />
       </Col>
       <Col span={12}>
-        <BooleanInput
+        <ManagedFormItem
           label='Evolution'
-          prompt='Is evolution Pokémon?'
           enableable={{ enabled: isEvolutionFilterEnabled, setEnabled: setIsEvolutionFilterEnabled }}
-          selected={isEvolutionFilter}
-          setSelected={setIsEvolutionFilter}
+          inputs={[{
+            type: 'booleanSelect',
+            prompt: 'Is evolution Pokémon?',
+            selected: isEvolutionFilter,
+            setSelected: setIsEvolutionFilter,
+          }]}
         />
-        <BooleanInput
+        <ManagedFormItem
           label='Evolves'
-          prompt='Can evolve?'
           enableable={{ enabled: evolvesFilterEnabled, setEnabled: setEvolvesFilterEnabled }}
-          selected={evolvesFilter}
-          setSelected={setEvolvesFilter}
+          inputs={[{
+            type: 'booleanSelect',
+            prompt: 'Can evolve?',
+            selected: evolvesFilter,
+            setSelected: setEvolvesFilter,
+          }]}
         />
-        <MultiSelect
+        <ManagedFormItem
           label='Weakness'
-          placeholder='Weaknesses to include'
           enableable={{ enabled: weaknessFilterEnabled, setEnabled: setWeaknessFilterEnabled }}
-          options={types.map((type) => ({ value: type }))}
-          selectedOptions={weaknessFilter}
-          setSelectedOptions={setWeaknessFilter}
+          inputs={[{
+            type: 'multiSelect',
+            prompt: 'Weaknesses to include',
+            options: types.map((type) => ({ value: type })),
+            selectedOptions: weaknessFilter,
+            setSelectedOptions: setWeaknessFilter,
+          }]}
         />
-        <MultiSelect
+        <ManagedFormItem
           label='Weakness Exclusion'
-          placeholder='Weaknesses to exclude'
           enableable={{ enabled: weaknessExcludeFilterEnabled, setEnabled: setWeaknessExcludeFilterEnabled }}
-          options={types.map((type) => ({ value: type }))}
-          selectedOptions={weaknessExcludeFilter}
-          setSelectedOptions={setWeaknessExcludeFilter}
+          inputs={[{
+            type: 'multiSelect',
+            prompt: 'Weaknesses to exclude',
+            options: types.map((type) => ({ value: type })),
+            selectedOptions: weaknessExcludeFilter,
+            setSelectedOptions: setWeaknessExcludeFilter,
+          }]}
         />
-        <MultiSelect
+        <ManagedFormItem
           label='Resistance'
-          placeholder='Resistances to include'
           enableable={{ enabled: resistanceFilterEnabled, setEnabled: setResistanceFilterEnabled }}
-          options={types.map((type) => ({ value: type }))}
-          selectedOptions={resistanceFilter}
-          setSelectedOptions={setResistanceFilter}
+          inputs={[{
+            type: 'multiSelect',
+            prompt: 'Resistances to include',
+            options: types.map((type) => ({ value: type })),
+            selectedOptions: resistanceFilter,
+            setSelectedOptions: setResistanceFilter,
+          }]}
         />
-        <MultiSelect
+        <ManagedFormItem
           label='Resistance Exclusion'
-          placeholder='Resistances to exclude'
           enableable={{ enabled: resistanceExcludeFilterEnabled, setEnabled: setResistanceExcludeFilterEnabled }}
-          options={types.map((type) => ({ value: type }))}
-          selectedOptions={resistanceExcludeFilter}
-          setSelectedOptions={setResistanceExcludeFilter}
+          inputs={[{
+            type: 'multiSelect',
+            prompt: 'Resistances to exclude',
+            options: types.map((type) => ({ value: type })),
+            selectedOptions: resistanceExcludeFilter,
+            setSelectedOptions: setResistanceExcludeFilter,
+          }]}
         />
-        <MultiSelect
+        <ManagedFormItem
           label='Rarity'
-          placeholder='Rarities to include'
           enableable={{ enabled: rarityFilterEnabled, setEnabled: setRarityFilterEnabled }}
-          options={rarities.map((type) => ({ value: type }))}
-          selectedOptions={rarityFilter}
-          setSelectedOptions={setRarityFilter}
+          inputs={[{
+            type: 'multiSelect',
+            prompt: 'Rarities to include',
+            options: rarities.map((rarity) => ({ value: rarity })),
+            selectedOptions: rarityFilter,
+            setSelectedOptions: setRarityFilter,
+          }]}
         />
-        <MultiSelect
+        <ManagedFormItem
           label='Rarity Exclusion'
-          placeholder='Rarities to exclude'
           enableable={{ enabled: rarityExcludeFilterEnabled, setEnabled: setRarityFilterExcludeEnabled }}
-          options={rarities.map((type) => ({ value: type }))}
-          selectedOptions={rarityExcludeFilter}
-          setSelectedOptions={setRarityExcludeFilter}
+          inputs={[{
+            type: 'multiSelect',
+            prompt: 'Rarities to exclude',
+            options: rarities.map((rarity) => ({ value: rarity })),
+            selectedOptions: rarityExcludeFilter,
+            setSelectedOptions: setRarityExcludeFilter,
+          }]}
         />
-        <TextInput
+        <ManagedFormItem
           label='Flavor Text'
-          placeholder='Flavor text to match'
           enableable={{ enabled: flavorTextFilterEnabled, setEnabled: setFlavorTextFilterEnabled }}
-          text={flavorTextFilter}
-          setText={setFlavorTextFilter}
+          inputs={[{
+            type: 'textSelect',
+            prompt: 'Flavor text to match',
+            text: flavorTextFilter,
+            setText: setFlavorTextFilter,
+          }]}
         />
-        <TextInput
+        <ManagedFormItem
           label='Flavor Text Exclusion'
-          placeholder='Flavor text to filter out'
           enableable={{ enabled: flavorTextExcludeFilterEnabled, setEnabled: setFlavorTextExcludeFilterEnabled }}
-          text={flavorTextExcludeFilter}
-          setText={setFlavorTextExcludeFilter}
+          inputs={[{
+            type: 'textSelect',
+            prompt: 'Flavor text to filter out',
+            text: flavorTextExcludeFilter,
+            setText: setFlavorTextExcludeFilter,
+          }]}
         />
         <AttacksFilterDisplay
           enableable={{ enabled: attacksFilterEnabled, setEnabled: setAttacksFilterEnabled }}

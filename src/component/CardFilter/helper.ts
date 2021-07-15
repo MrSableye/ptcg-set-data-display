@@ -5,8 +5,8 @@ type FilterDataValue<T> = { enabled: boolean, value: T };
 interface FilterData {
   name?: FilterDataValue<string>;
   supertype?: FilterDataValue<string[]>;
-  subtype?: FilterDataValue<string[]>;
-  type?: FilterDataValue<string[]>;
+  subtype?: FilterDataValue<{ subtypes: string[], isUnion: boolean }>;
+  type?: FilterDataValue<{ types: string[], isUnion: boolean }>;
   level?: FilterDataValue<string>;
   hp?: FilterDataValue<{ min: number, max: number }>;
   isEvolution?: FilterDataValue<boolean>;
@@ -48,11 +48,11 @@ export const getFilters = ({
   }
 
   if (subtype && subtype.enabled) {
-    filters.push({ name: 'subtypes', value: { isUnion: false, types: subtype.value } });
+    filters.push({ name: 'subtypes', value: { isUnion: subtype.value.isUnion, types: subtype.value.subtypes } });
   }
 
   if (type && type.enabled) {
-    filters.push({ name: 'types', value: { isUnion: false, types: type.value } });
+    filters.push({ name: 'types', value: { isUnion: type.value.isUnion, types: type.value.types } });
   }
 
   if (level && level.enabled) {

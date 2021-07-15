@@ -1,31 +1,19 @@
-import { Form, Input } from 'antd';
-import CheckboxLabel from './CheckboxLabel';
-import { Enableable } from './types';
+import { Input } from 'antd';
+import { BaseFields, TextInputFields } from './types';
 
-interface TextInputProps {
-  label: string;
-  tooltip?: string;
-  placeholder?: string;
-  enableable?: Enableable;
-  text: string;
-  setText: (text: string) => void;
-}
+type TextInputProps = BaseFields & TextInputFields;
 
 const TextInput = ({
-  label,
-  tooltip,
-  placeholder,
+  prompt,
   enableable,
   text,
   setText,
-}: TextInputProps) => <Form.Item label={<CheckboxLabel label={label} tooltip={tooltip} enableable={enableable} />}>
-  <Input
-    type='text'
-    disabled={enableable ? !enableable.enabled : false}
-    value={text}
-    onChange={(event) => setText(event.target.value)}
-    placeholder={placeholder}
-  />
-</Form.Item>;
+}: TextInputProps) => <Input
+  type='text'
+  disabled={enableable ? !enableable.enabled : false}
+  value={text}
+  onChange={(event) => setText(event.target.value)}
+  placeholder={prompt}
+/>;
 
 export default TextInput;

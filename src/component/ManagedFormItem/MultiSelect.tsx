@@ -1,48 +1,30 @@
-import { Form, Select } from 'antd';
-import CheckboxLabel from './CheckboxLabel';
-import { Enableable } from './types';
+import { Select } from 'antd';
+import { BaseFields, MultiSelectFields } from './types';
 
-interface OptionWithLabel {
-  value: string;
-  label?: string;
-}
-
-interface MultiSelectProps {
-  label: string;
-  tooltip?: string;
-  placeholder?: string;
-  enableable?: Enableable;
-  options: OptionWithLabel[];
-  selectedOptions: string[];
-  setSelectedOptions: (options: string[]) => void;
-}
+type MultiSelectProps = BaseFields & MultiSelectFields;
 
 const MultiSelect = ({
-  label,
-  tooltip,
-  placeholder,
+  prompt,
   options,
   enableable,
   selectedOptions,
   setSelectedOptions,
-}: MultiSelectProps) => <Form.Item label={<CheckboxLabel label={label} tooltip={tooltip} enableable={enableable} />}>
-  <Select
-    mode='multiple'
-    disabled={enableable ? !enableable.enabled : false}
-    allowClear
-    value={selectedOptions}
-    onChange={setSelectedOptions}
-    placeholder={placeholder || ''}
-  >
-    {options.map((option) => (
-      <Select.Option
-        key={option.value}
-        value={option.value}
-      >
-        {option.label || option.value}
-      </Select.Option>
-    ))}
-  </Select>
-</Form.Item>;
+}: MultiSelectProps) => <Select
+  mode='multiple'
+  disabled={enableable ? !enableable.enabled : false}
+  allowClear
+  value={selectedOptions}
+  onChange={setSelectedOptions}
+  placeholder={prompt || ''}
+>
+  {options.map((option) => (
+    <Select.Option
+      key={option.value}
+      value={option.value}
+    >
+      {option.label || option.value}
+    </Select.Option>
+  ))}
+</Select>;
 
 export default MultiSelect;

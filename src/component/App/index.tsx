@@ -5,7 +5,7 @@ import { Filter, filterCards, filterDuplicateCards } from 'utility/filter';
 import CardFilter from 'component/CardFilter';
 import CardList from 'component/CardList';
 import CardStat from 'component/CardStat';
-import { BooleanInput, MultiSelect } from 'component/ManagedFormItem';
+import { ManagedFormItem } from 'component/ManagedFormItem';
 import Header from './Header';
 
 interface AppProps {
@@ -33,21 +33,27 @@ const App = ({ cache }: AppProps) => {
         header='Settings'
       >
         <Form size='small'>
-          <MultiSelect
+          <ManagedFormItem
             label='Sets'
-            placeholder='Sets to select from'
-            options={cache.sets.map((set) => ({
-              value: set.id,
-              label: `${set.name} (${set.ptcgoCode || set.id})`,
-            }))}
-            selectedOptions={setIds}
-            setSelectedOptions={setSetIds}
+            inputs={[{
+              type: 'multiSelect',
+              prompt: 'Sets to select from',
+              options: cache.sets.map((set) => ({
+                value: set.id,
+                label: `${set.name} (${set.ptcgoCode || set.id})`,
+              })),
+              selectedOptions: setIds,
+              setSelectedOptions: setSetIds,
+            }]}
           />
-          <BooleanInput
+          <ManagedFormItem
             label='Filter identical cards'
-            prompt='Filter identical cards'
-            selected={filterDuplicates}
-            setSelected={setFilterDuplicates}
+            inputs={[{
+              type: 'booleanSelect',
+              prompt: 'Filter identical cards',
+              selected: filterDuplicates,
+              setSelected: setFilterDuplicates,
+            }]}
           />
         </Form>
       </Collapse.Panel>

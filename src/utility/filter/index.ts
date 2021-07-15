@@ -15,13 +15,30 @@ import {
 const toId = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '');
 
 const anyMatch = <T, R>(sources: T[], targets: R[], predicate: (a: T, b: R) => boolean) => {
-  const meMatch =  sources.some((source) => {
+  return sources.some((source) => {
     return targets.some((target) => {
       return predicate(source, target)
     });
   });
+};
 
-  return meMatch;
+const allMatch = <T, R>(sources: T[], targets: R[], predicate: (a: T, b: R) => boolean) => {
+  return targets.every((target) => {
+    return sources.some((source) => {
+      return predicate(source, target);
+    });
+  });
+};
+
+const allOrAnyMatch = <T, R>(
+  sources: T[],
+  targets: R[],
+  predicate: (a: T, b: R) => boolean, 
+  isAny: boolean,
+) => {
+  return isAny
+    ? anyMatch(sources, targets, predicate)
+    : allMatch(sources, targets, predicate);
 };
 
 const inRange = (value: number, min?: number, max?: number) => {
@@ -149,10 +166,10 @@ const configuredFilters: Filters = {
   id: falseFilter,
   name: (source, { query }) => toId(source.name).includes(toId(query)),
   supertype: ({ supertype }, { supertypes }) => supertypes.includes(supertype),
-  subtypes: ({ subtypes }, { isUnion, types }) => anyMatch(subtypes || [], types, (a, b) => a === b),  // TODO
+  subtypes: ({ subtypes }, { isUnion, types }) => allOrAnyMatch(subtypes || [], types, (a, b) => a === b, isUnion),
   level: ({ level }, { query }) => toId(level || '').includes(toId(query)),
   hp: filterHp,
-  types: ({ types }, { types: typesQuery, isUnion }) => anyMatch(types || [], typesQuery, (a, b) => a === b),  // TODO
+  types: ({ types }, { types: typesQuery, isUnion }) => allOrAnyMatch(types || [], typesQuery, (a, b) => a === b, isUnion),
   evolvesFrom: ({ evolvesFrom }, { isEvolution }) => isEvolution === ((evolvesFrom || []).length > 0),
   abilities: filterAbilities,
   attacks: filterAttacks,
