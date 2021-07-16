@@ -1,8 +1,7 @@
+import React from 'react';
 import { Count } from 'utility/stat';
 
-const round = (value: number) => {
-  return Math.round(value * 100) / 100;
-};
+const round = (value: number) => Math.round(value * 100) / 100;
 
 interface TypeConfig {
   name: string;
@@ -91,23 +90,33 @@ interface TypeBarProps {
 }
 
 const TypeBar = ({ count }: TypeBarProps) => {
-  const typeData = Object.entries(count.individual).map(([typeName, typeCount]) => {
-    if (!typeConfigs[typeName]) {
-      console.log(typeName);
-    }
-    return [typeCount, typeConfigs[typeName]] as [number, TypeConfig];
-  }).sort((a, b) => {
-    return a[1].order - b[1].order;
-  });
+  const typeData = Object.entries(count.individual)
+    .map(([typeName, typeCount]) => [typeCount, typeConfigs[typeName]] as [number, TypeConfig])
+    .sort((a, b) => a[1].order - b[1].order);
 
-  return <div style={{ width: '100%' }}>
-    {
+  return (
+    <div style={{ width: '100%' }}>
+      {
       typeData.map(([typeCount, typeConfig]) => {
-        const percent = `${100 * typeCount / count.total}%`;
-        return <span style={{ display: 'inline-block', width: percent, backgroundColor: typeConfig.color, paddingTop: '1em', paddingBottom: '1em', textAlign: 'center', whiteSpace: 'nowrap' }}>{`${typeConfig.shortName} (${round(100 * typeCount / count.total)}%)`}</span>;
+        const percent = `${(100 * typeCount) / count.total}%`;
+        return (
+          <span style={{
+            display: 'inline-block',
+            width: percent,
+            backgroundColor: typeConfig.color,
+            paddingTop: '1em',
+            paddingBottom: '1em',
+            textAlign: 'center',
+            whiteSpace: 'nowrap',
+          }}
+          >
+            {`${typeConfig.shortName} (${round((100 * typeCount) / count.total)}%)`}
+          </span>
+        );
       })
     }
-  </div>;
+    </div>
+  );
 };
 
 export default TypeBar;

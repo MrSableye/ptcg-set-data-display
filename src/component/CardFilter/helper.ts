@@ -20,6 +20,7 @@ interface FilterData {
   abilities?: FilterDataValue<AbilitiesFilter>;
 }
 
+// eslint-disable-next-line import/prefer-default-export
 export const getFilters = ({
   name,
   supertype,
@@ -64,19 +65,19 @@ export const getFilters = ({
   }
 
   if (isEvolution && isEvolution.enabled) {
-    filters.push({ name: 'evolvesFrom', value: { isEvolution: isEvolution.value }});
+    filters.push({ name: 'evolvesFrom', value: { isEvolution: isEvolution.value } });
   }
 
   if (evolves && evolves.enabled) {
-    filters.push({ name: 'evolvesTo', value: { canEvolve: evolves.value }});
+    filters.push({ name: 'evolvesTo', value: { canEvolve: evolves.value } });
   }
 
   if (weakness && weakness.enabled) {
-    filters.push({ name: 'weaknesses', value: { types: weakness.value }});
+    filters.push({ name: 'weaknesses', value: { types: weakness.value } });
   }
 
   if (resistance && resistance.enabled) {
-    filters.push({ name: 'resistances', value: { types: resistance.value }});
+    filters.push({ name: 'resistances', value: { types: resistance.value } });
   }
 
   if (retreat && retreat.enabled) {
@@ -84,11 +85,11 @@ export const getFilters = ({
   }
 
   if (rarity && rarity.enabled) {
-    filters.push({ name: 'rarity', value: { rarities: rarity.value }});
+    filters.push({ name: 'rarity', value: { rarities: rarity.value } });
   }
 
   if (flavorText && flavorText.enabled) {
-    filters.push({ name: 'flavorText', value: { query: flavorText.value }});
+    filters.push({ name: 'flavorText', value: { query: flavorText.value } });
   }
 
   if (attacks && attacks.enabled) {

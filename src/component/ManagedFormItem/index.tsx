@@ -1,3 +1,4 @@
+import React from 'react';
 import { Form } from 'antd';
 import BooleanInput from './BooleanInput';
 import CheckboxLabel from './CheckboxLabel';
@@ -16,10 +17,49 @@ const FormItem = ({
   inputFields,
 }: FormItemProps) => {
   switch (inputFields.type) {
-    case 'booleanSelect': return <BooleanInput {...baseFields} {...inputFields} />;
-    case 'multiSelect': return <MultiSelect {...baseFields} {...inputFields} />;
-    case 'rangeSelect': return <RangeSelect {...baseFields} {...inputFields} />;
-    case 'textSelect': return <TextInput {...baseFields} {...inputFields} />;
+    case 'booleanSelect': return (
+      <BooleanInput
+        type="booleanSelect"
+        label={baseFields.label}
+        enableable={baseFields.enableable}
+        prompt={inputFields.prompt}
+        selected={inputFields.selected}
+        setSelected={inputFields.setSelected}
+      />
+    );
+    case 'multiSelect': return (
+      <MultiSelect
+        type="multiSelect"
+        label={baseFields.label}
+        enableable={baseFields.enableable}
+        prompt={inputFields.prompt}
+        options={inputFields.options}
+        selectedOptions={inputFields.selectedOptions}
+        setSelectedOptions={inputFields.setSelectedOptions}
+      />
+    );
+    case 'rangeSelect': return (
+      <RangeSelect
+        type="rangeSelect"
+        label={baseFields.label}
+        enableable={baseFields.enableable}
+        maxRange={inputFields.maxRange}
+        step={inputFields.step}
+        selectedRange={inputFields.selectedRange}
+        setSelectedRange={inputFields.setSelectedRange}
+      />
+    );
+    case 'textSelect': return (
+      <TextInput
+        type="textSelect"
+        label={baseFields.label}
+        enableable={baseFields.enableable}
+        prompt={inputFields.prompt}
+        text={inputFields.text}
+        setText={inputFields.setText}
+      />
+    );
+    default: return <div />;
   }
 };
 
@@ -32,17 +72,20 @@ export const ManagedFormItem = ({
   enableable,
   tooltip,
   inputs,
-}: ManagedFormItemProps) => <Form.Item label={<CheckboxLabel label={label} tooltip={tooltip} enableable={enableable} />}>
-  {inputs.map((inputFields) => <FormItem
-    baseFields={{
-      label,
-      enableable,
-      tooltip,
-    }}
-    inputFields={inputFields}
-    />
-  )}
-</Form.Item>;
+}: ManagedFormItemProps) => (
+  <Form.Item label={<CheckboxLabel label={label} tooltip={tooltip} enableable={enableable} />}>
+    {inputs.map((inputFields) => (
+      <FormItem
+        baseFields={{
+          label,
+          enableable,
+          tooltip,
+        }}
+        inputFields={inputFields}
+      />
+    ))}
+  </Form.Item>
+);
 
 export { CheckboxLabel };
 

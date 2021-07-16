@@ -1,4 +1,4 @@
-import cache from './cache.json';
+import cardCache from './cache.json';
 import {
   Ability,
   AncientTrait,
@@ -14,16 +14,18 @@ import {
   WeaknessOrResistance,
 } from './types';
 
-const cardCache = cache as Cache;
-const getCardsForSets = (cache: Cache, setIds: string[]): Card[] => {
-  return setIds.reduce((cards, setId) => {
-    const setCards = Object.values(cache.cards[setId] || {});
+const typedCardCache = cardCache as Cache;
 
-    return [...cards, ...setCards];
-  }, [] as Card[]);
-};
+const getCardsForSets = (
+  cache: Cache,
+  setIds: string[],
+): Card[] => setIds.reduce((cards, setId) => {
+  const setCards = Object.values(cache.cards[setId] || {});
 
-export { cardCache, getCardsForSets };
+  return [...cards, ...setCards];
+}, [] as Card[]);
+
+export { typedCardCache as cardCache, getCardsForSets };
 export type {
   Ability,
   AncientTrait,

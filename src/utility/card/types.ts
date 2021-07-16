@@ -48,7 +48,7 @@ export interface Images {
   large: string;
 }
 
-export interface Prices {
+export interface TcgPlayerPrices {
   low?: Nullable<number>;
   mid?: Nullable<number>;
   high?: Nullable<number>;
@@ -62,11 +62,11 @@ export interface AncientTrait {
 }
 
 export interface Prices {
-  holofoil?: Nullable<Prices>;
-  normal?: Nullable<Prices>;
-  '1stEditionHolofoil'?: Nullable<Prices>;
-  '1stEditionNormal'?: Nullable<Prices>;
-  reverseHolofoil?: Nullable<Prices>;
+  holofoil?: Nullable<TcgPlayerPrices>;
+  normal?: Nullable<TcgPlayerPrices>;
+  '1stEditionHolofoil'?: Nullable<TcgPlayerPrices>;
+  '1stEditionNormal'?: Nullable<TcgPlayerPrices>;
+  reverseHolofoil?: Nullable<TcgPlayerPrices>;
 }
 
 export interface Tcgplayer {

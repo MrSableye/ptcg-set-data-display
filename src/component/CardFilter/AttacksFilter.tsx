@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Card,
@@ -26,186 +26,192 @@ const AttackFilterDisplay = ({
   attackFilter,
   setAttackFilter,
   removeSelf,
-}: AttackFilterDisplayProps) => <Card
-  title={<CheckboxLabel
-    label='Enable filter'
-    enableable={{
-      enabled: attackFilter.enabled,
-      setEnabled: (enabled) => setAttackFilter({
-        ...attackFilter,
-        enabled,
-      })
-    }}
-  />}
-  extra={<Button
-    type='primary'
-    danger
-    onClick={removeSelf}
+}: AttackFilterDisplayProps) => (
+  <Card
+    title={(
+      <CheckboxLabel
+        label="Enable filter"
+        enableable={{
+          enabled: attackFilter.enabled,
+          setEnabled: (enabled) => setAttackFilter({
+            ...attackFilter,
+            enabled,
+          }),
+        }}
+      />
+)}
+    extra={(
+      <Button
+        type="primary"
+        danger
+        onClick={removeSelf}
+      >
+        Delete
+      </Button>
+)}
   >
-    Delete
-  </Button>}
->
-  <Form size='small' colon={false} labelAlign='left' labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
-    <ManagedFormItem
-      label='Attack name'
-      enableable={{
-        enabled: attackFilter.value.name.enabled,
-        setEnabled: (enabled) => setAttackFilter({
-          ...attackFilter,
-          value: {
-            ...attackFilter.value,
-            name: {
-              ...attackFilter.value.name,
-              enabled,
-            }
-          },
-        })
-      }}
-      inputs={[{
-        type: 'textSelect',
-        prompt: 'Attack name to match',
-        text: attackFilter.value.name.value,
-        setText: (text) => setAttackFilter({
-          ...attackFilter,
-          value: {
-            ...attackFilter.value,
-            name: {
-              enabled: attackFilter.value.name.enabled,
-              value: text,
-            }
-          },
-        }),
-      }]}
-    />
-    <ManagedFormItem
-      label='Effect text'
-      enableable={{
-        enabled: attackFilter.value.text.enabled,
-        setEnabled: (enabled) => setAttackFilter({
-          ...attackFilter,
-          value: {
-            ...attackFilter.value,
-            text: {
-              ...attackFilter.value.text,
-              enabled,
-            }
-          },
-        })
-      }}
-      inputs={[{
-        type: 'textSelect',
-        prompt: 'Effect text to match',
-        text: attackFilter.value.text.value,
-        setText: (text) => setAttackFilter({
-          ...attackFilter,
-          value: {
-            ...attackFilter.value,
-            text: {
-              enabled: attackFilter.value.text.enabled,
-              value: text,
-            }
-          },
-        }),
-      }]}
-    />
-    <ManagedFormItem
-      label='Attack slot'
-      enableable={{
-        enabled: attackFilter.value.slot.enabled,
-        setEnabled: (enabled) => setAttackFilter({
-          ...attackFilter,
-          value: {
-            ...attackFilter.value,
-            slot: {
-              ...attackFilter.value.slot,
-              enabled,
-            }
-          },
-        })
-      }}
-      inputs={[{
-        type: 'rangeSelect',
-        maxRange: { min: 0, max: 2 },
-        step: 1,
-        selectedRange: attackFilter.value.slot.value,
-        setSelectedRange: (range) => setAttackFilter({
-          ...attackFilter,
-          value: {
-            ...attackFilter.value,
-            slot: {
-              enabled: attackFilter.value.slot.enabled,
-              value: range,
-            }
-          },
-        }),
-      }]}
-    />
-    <ManagedFormItem
-      label='Cost'
-      enableable={{
-        enabled: attackFilter.value.cost.enabled,
-        setEnabled: (enabled) => setAttackFilter({
-          ...attackFilter,
-          value: {
-            ...attackFilter.value,
-            cost: {
-              ...attackFilter.value.cost,
-              enabled,
-            }
-          },
-        })
-      }}
-      inputs={[{
-        type: 'rangeSelect',
-        maxRange: { min: 0, max: 6 },
-        step: 1,
-        selectedRange: attackFilter.value.cost.value,
-        setSelectedRange: (range) => setAttackFilter({
-          ...attackFilter,
-          value: {
-            ...attackFilter.value,
-            cost: {
-              enabled: attackFilter.value.cost.enabled,
-              value: range,
-            }
-          },
-        }),
-      }]}
-    />
-    <ManagedFormItem
-      label='Damage'
-      enableable={{
-        enabled: attackFilter.value.damage.enabled,
-        setEnabled: (enabled) => setAttackFilter({
-          ...attackFilter,
-          value: {
-            ...attackFilter.value,
-            damage: {
-              ...attackFilter.value.damage,
-              enabled,
-            }
-          },
-        })
-      }}
-      inputs={[{
-        type: 'rangeSelect',
-        maxRange: { min: 0, max: 500 },
-        step: 10,
-        selectedRange: attackFilter.value.damage.value,
-        setSelectedRange: (range) => setAttackFilter({
-          ...attackFilter,
-          value: {
-            ...attackFilter.value,
-            damage: {
-              enabled: attackFilter.value.damage.enabled,
-              value: range,
-            }
-          },
-        }),
-      }]}
-    />
-  </Form>
-</Card>;
+    <Form size="small" colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
+      <ManagedFormItem
+        label="Attack name"
+        enableable={{
+          enabled: attackFilter.value.name.enabled,
+          setEnabled: (enabled) => setAttackFilter({
+            ...attackFilter,
+            value: {
+              ...attackFilter.value,
+              name: {
+                ...attackFilter.value.name,
+                enabled,
+              },
+            },
+          }),
+        }}
+        inputs={[{
+          type: 'textSelect',
+          prompt: 'Attack name to match',
+          text: attackFilter.value.name.value,
+          setText: (text) => setAttackFilter({
+            ...attackFilter,
+            value: {
+              ...attackFilter.value,
+              name: {
+                enabled: attackFilter.value.name.enabled,
+                value: text,
+              },
+            },
+          }),
+        }]}
+      />
+      <ManagedFormItem
+        label="Effect text"
+        enableable={{
+          enabled: attackFilter.value.text.enabled,
+          setEnabled: (enabled) => setAttackFilter({
+            ...attackFilter,
+            value: {
+              ...attackFilter.value,
+              text: {
+                ...attackFilter.value.text,
+                enabled,
+              },
+            },
+          }),
+        }}
+        inputs={[{
+          type: 'textSelect',
+          prompt: 'Effect text to match',
+          text: attackFilter.value.text.value,
+          setText: (text) => setAttackFilter({
+            ...attackFilter,
+            value: {
+              ...attackFilter.value,
+              text: {
+                enabled: attackFilter.value.text.enabled,
+                value: text,
+              },
+            },
+          }),
+        }]}
+      />
+      <ManagedFormItem
+        label="Attack slot"
+        enableable={{
+          enabled: attackFilter.value.slot.enabled,
+          setEnabled: (enabled) => setAttackFilter({
+            ...attackFilter,
+            value: {
+              ...attackFilter.value,
+              slot: {
+                ...attackFilter.value.slot,
+                enabled,
+              },
+            },
+          }),
+        }}
+        inputs={[{
+          type: 'rangeSelect',
+          maxRange: { min: 0, max: 2 },
+          step: 1,
+          selectedRange: attackFilter.value.slot.value,
+          setSelectedRange: (range) => setAttackFilter({
+            ...attackFilter,
+            value: {
+              ...attackFilter.value,
+              slot: {
+                enabled: attackFilter.value.slot.enabled,
+                value: range,
+              },
+            },
+          }),
+        }]}
+      />
+      <ManagedFormItem
+        label="Cost"
+        enableable={{
+          enabled: attackFilter.value.cost.enabled,
+          setEnabled: (enabled) => setAttackFilter({
+            ...attackFilter,
+            value: {
+              ...attackFilter.value,
+              cost: {
+                ...attackFilter.value.cost,
+                enabled,
+              },
+            },
+          }),
+        }}
+        inputs={[{
+          type: 'rangeSelect',
+          maxRange: { min: 0, max: 6 },
+          step: 1,
+          selectedRange: attackFilter.value.cost.value,
+          setSelectedRange: (range) => setAttackFilter({
+            ...attackFilter,
+            value: {
+              ...attackFilter.value,
+              cost: {
+                enabled: attackFilter.value.cost.enabled,
+                value: range,
+              },
+            },
+          }),
+        }]}
+      />
+      <ManagedFormItem
+        label="Damage"
+        enableable={{
+          enabled: attackFilter.value.damage.enabled,
+          setEnabled: (enabled) => setAttackFilter({
+            ...attackFilter,
+            value: {
+              ...attackFilter.value,
+              damage: {
+                ...attackFilter.value.damage,
+                enabled,
+              },
+            },
+          }),
+        }}
+        inputs={[{
+          type: 'rangeSelect',
+          maxRange: { min: 0, max: 500 },
+          step: 10,
+          selectedRange: attackFilter.value.damage.value,
+          setSelectedRange: (range) => setAttackFilter({
+            ...attackFilter,
+            value: {
+              ...attackFilter.value,
+              damage: {
+                enabled: attackFilter.value.damage.enabled,
+                value: range,
+              },
+            },
+          }),
+        }]}
+      />
+    </Form>
+  </Card>
+);
 
 const addNewAttackFilter = (
   attackFilters: AttacksFilter,
@@ -251,27 +257,31 @@ interface AttacksFilterDisplayFormProps {
 const AttacksFilterDisplayForm = ({
   attacksFilter,
   setAttacksFilter,
-}: AttacksFilterDisplayFormProps) => <Form size='small' colon={false} labelAlign='left' labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
-  {
-    attacksFilter.map((attackFilter, attackFilterIndex) => <AttackFilterDisplay
-      attackFilter={attackFilter}
-      setAttackFilter={(attackFilter: EnableableFilter<AttackFilter>) => {
-        setAttacksFilter(updateAttackFilter(
-          attacksFilter,
-          attackFilter,
-          attackFilterIndex,
-        ));
-      }}
-      removeSelf={() => setAttacksFilter(removeAttackFilter(attacksFilter, attackFilterIndex))}
-    />)
+}: AttacksFilterDisplayFormProps) => (
+  <Form size="small" colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
+    {
+    attacksFilter.map((attackFilter, attackFilterIndex) => (
+      <AttackFilterDisplay
+        attackFilter={attackFilter}
+        setAttackFilter={(enableablAattackFilter: EnableableFilter<AttackFilter>) => {
+          setAttacksFilter(updateAttackFilter(
+            attacksFilter,
+            enableablAattackFilter,
+            attackFilterIndex,
+          ));
+        }}
+        removeSelf={() => setAttacksFilter(removeAttackFilter(attacksFilter, attackFilterIndex))}
+      />
+    ))
   }
-  <Button
-    type='primary'
-    onClick={() => setAttacksFilter(addNewAttackFilter(attacksFilter))}
-  >
-    Add Filter
-  </Button>
-</Form>;
+    <Button
+      type="primary"
+      onClick={() => setAttacksFilter(addNewAttackFilter(attacksFilter))}
+    >
+      Add Filter
+    </Button>
+  </Form>
+);
 
 interface AttacksFilterDisplayProps {
   enableable: Enableable;
@@ -286,26 +296,28 @@ const AttacksFilterDisplay = ({
 }: AttacksFilterDisplayProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  return <Form.Item label={<CheckboxLabel label={'Attacks'} enableable={enableable} />}>
-    <Button
-      disabled={!enableable.enabled}
-      onClick={() => setIsModalOpen(true)}
-    >
-      Open Attack Filters
-    </Button>
-    <Modal
-      visible={isModalOpen}
-      onCancel={() => setIsModalOpen(false)}
-      onOk={() => setIsModalOpen(false)}
-      closable={false}
-      footer={<Button onClick={() => setIsModalOpen(false)}>Close</Button>}
-    >
-      <AttacksFilterDisplayForm
-        attacksFilter={attacksFilter}
-        setAttacksFilter={setAttacksFilter}
-      />
-    </Modal>
-  </Form.Item>;
+  return (
+    <Form.Item label={<CheckboxLabel label="Attacks" enableable={enableable} />}>
+      <Button
+        disabled={!enableable.enabled}
+        onClick={() => setIsModalOpen(true)}
+      >
+        Open Attack Filters
+      </Button>
+      <Modal
+        visible={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        onOk={() => setIsModalOpen(false)}
+        closable={false}
+        footer={<Button onClick={() => setIsModalOpen(false)}>Close</Button>}
+      >
+        <AttacksFilterDisplayForm
+          attacksFilter={attacksFilter}
+          setAttacksFilter={setAttacksFilter}
+        />
+      </Modal>
+    </Form.Item>
+  );
 };
 
 export default AttacksFilterDisplay;

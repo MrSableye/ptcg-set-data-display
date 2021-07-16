@@ -14,42 +14,38 @@ import {
 
 const toId = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '');
 
-const anyMatch = <T, R>(sources: T[], targets: R[], predicate: (a: T, b: R) => boolean) => {
-  return sources.some((source) => {
-    return targets.some((target) => {
-      return predicate(source, target)
-    });
-  });
-};
+const anyMatch = <T, R>(
+  sources: T[],
+  targets: R[],
+  predicate: (a: T, b: R) => boolean,
+) => sources.some((source) => targets.some((target) => predicate(source, target)));
 
-const allMatch = <T, R>(sources: T[], targets: R[], predicate: (a: T, b: R) => boolean) => {
-  return targets.every((target) => {
-    return sources.some((source) => {
-      return predicate(source, target);
-    });
-  });
-};
+const allMatch = <T, R>(
+  sources: T[],
+  targets: R[],
+  predicate: (a: T, b: R) => boolean,
+) => targets.every((target) => sources.some((source) => predicate(source, target)));
 
 const allOrAnyMatch = <T, R>(
   sources: T[],
   targets: R[],
-  predicate: (a: T, b: R) => boolean, 
+  predicate: (a: T, b: R) => boolean,
   isAny: boolean,
-) => {
-  return isAny
+) => (isAny
     ? anyMatch(sources, targets, predicate)
-    : allMatch(sources, targets, predicate);
-};
+    : allMatch(sources, targets, predicate));
 
-const inRange = (value: number, min?: number, max?: number) => {
-  return ((min || -Infinity) <= value) && ((max || Infinity) >= value);
-};
+const inRange = (
+  value: number,
+  min?: number,
+  max?: number,
+) => ((min || -Infinity) <= value) && ((max || Infinity) >= value);
 
 const falseFilter = () => false;
 
 const filterHp = (card: Card, rangeFilter: RangeFilter) => {
   if (card.hp) {
-    const parsedHp = parseInt(card.hp);
+    const parsedHp = parseInt(card.hp, 10);
 
     if (!Number.isNaN(parsedHp)) {
       return inRange(parsedHp, rangeFilter.min, rangeFilter.max);
@@ -60,7 +56,9 @@ const filterHp = (card: Card, rangeFilter: RangeFilter) => {
 };
 
 const filterAttack = (attack: Attack, attackFilter: AttackFilter, attackIndex: number) => {
-  const { name, text, slot, cost, damage } = attackFilter;
+  const {
+    name, text, slot, cost, damage,
+  } = attackFilter;
 
   if (name.enabled && !toId(attack.name).includes(toId(name.value))) {
     return false;
@@ -103,7 +101,7 @@ const filterAttack = (attack: Attack, attackFilter: AttackFilter, attackIndex: n
 };
 
 const filterAttacks = (card: Card, attacksFilter: AttacksFilter) => {
-  const attacks = card.attacks;
+  const { attacks } = card;
 
   if (attacks) {
     return attacksFilter.every((attackFilter) => {
@@ -139,7 +137,7 @@ const filterAbility = (ability: Ability, abilityFilter: AbilityFilter) => {
 };
 
 const filterAbilities = (card: Card, abilitiesFilter: AbilitiesFilter) => {
-  const abilities = card.abilities;
+  const { abilities } = card;
 
   if (abilities) {
     return abilitiesFilter.every((abilityFilter) => {
@@ -166,54 +164,75 @@ const configuredFilters: Filters = {
   id: falseFilter,
   name: (source, { query }) => toId(source.name).includes(toId(query)),
   supertype: ({ supertype }, { supertypes }) => supertypes.includes(supertype),
-  subtypes: ({ subtypes }, { isUnion, types }) => allOrAnyMatch(subtypes || [], types, (a, b) => a === b, isUnion),
+  subtypes: (
+    { subtypes },
+    { isUnion, types },
+  ) => allOrAnyMatch(subtypes || [], types, (a, b) => a === b, isUnion),
   level: ({ level }, { query }) => toId(level || '').includes(toId(query)),
   hp: filterHp,
-  types: ({ types }, { types: typesQuery, isUnion }) => allOrAnyMatch(types || [], typesQuery, (a, b) => a === b, isUnion),
-  evolvesFrom: ({ evolvesFrom }, { isEvolution }) => isEvolution === ((evolvesFrom || []).length > 0),
+  types: (
+    { types },
+    { types: typesQuery, isUnion },
+  ) => allOrAnyMatch(types || [], typesQuery, (a, b) => a === b, isUnion),
+  evolvesFrom: (
+    { evolvesFrom },
+    { isEvolution },
+  ) => isEvolution === ((evolvesFrom || []).length > 0),
   abilities: filterAbilities,
   attacks: filterAttacks,
-  weaknesses: ({ weaknesses }, { types }) => anyMatch(weaknesses || [], types, (a, b) => a.type === b),
+  weaknesses: (
+    { weaknesses },
+    { types },
+  ) => anyMatch(weaknesses || [], types, (a, b) => a.type === b),
   retreatCost: falseFilter,
-  convertedRetreatCost: ({ convertedRetreatCost }, { min, max }) => inRange(convertedRetreatCost || 0, min, max),
+  convertedRetreatCost: (
+    { convertedRetreatCost },
+    { min, max },
+  ) => inRange(convertedRetreatCost || 0, min, max),
   set: falseFilter,
   number: falseFilter,
   artist: falseFilter,
-  rarity: ({ rarity }, { rarities }) => rarities.some((rarityQuery) => rarity?.includes(rarityQuery)),
+  rarity: (
+    { rarity },
+    { rarities },
+  ) => rarities.some((rarityQuery) => rarity?.includes(rarityQuery)),
   flavorText: ({ flavorText }, { query }) => toId(flavorText || '').includes(toId(query)),
   nationalPokedexNumbers: falseFilter,
   legalities: falseFilter,
   images: falseFilter,
   tcgplayer: falseFilter,
-  resistances: ({ resistances }, { types }) => anyMatch(resistances || [], types, (a, b) => a.type === b),
+  resistances: (
+    { resistances },
+    { types },
+  ) => anyMatch(resistances || [], types, (a, b) => a.type === b),
   evolvesTo: ({ evolvesTo }, { canEvolve }) => canEvolve === ((evolvesTo || []).length > 0),
-  rules: (source, filter) => false, // TODO
+  rules: () => false, // TODO
   ancientTrait: falseFilter,
 };
 
-export const filterCards = (cards: Card[], filters: Filter[], excludeFilters: Filter[]) => {
-  return cards.filter((card) => {
-    return filters.every((filter) => {
-      if (filter) {
-        const { name, value } = filter as { name: keyof FiltersType, value: any };
-        const filterFunction = configuredFilters[name] as FilterPredicate<Card, any>;
+export const filterCards = (
+  cards: Card[],
+  filters: Filter[],
+  excludeFilters: Filter[],
+) => cards.filter((card) => filters.every((filter) => {
+  if (filter) {
+    const { name, value } = filter as { name: keyof FiltersType, value: any };
+    const filterFunction = configuredFilters[name] as FilterPredicate<Card, any>;
 
-        return filterFunction ? filterFunction(card, value) : false;
-      }
+    return filterFunction ? filterFunction(card, value) : false;
+  }
 
-      return false;
-    }) && excludeFilters.every((filter) => {
-      if (filter) {
-        const { name, value } = filter  as { name: keyof FiltersType, value: any };
-        const filterFunction = configuredFilters[name] as FilterPredicate<Card, any>;
+  return false;
+}) && excludeFilters.every((filter) => {
+  if (filter) {
+    const { name, value } = filter as { name: keyof FiltersType, value: any };
+    const filterFunction = configuredFilters[name] as FilterPredicate<Card, any>;
 
-        return filterFunction ? !filterFunction(card, value) : true;
-      }
+    return filterFunction ? !filterFunction(card, value) : true;
+  }
 
-      return true;
-    });
-  })
-};
+  return true;
+}));
 
 const cardToString = (card: Card): string => {
   const entries = [];

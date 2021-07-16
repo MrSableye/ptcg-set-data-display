@@ -1,3 +1,4 @@
+import React from 'react';
 import { Input } from 'antd';
 import { BaseFields, TextInputFields } from './types';
 
@@ -8,12 +9,14 @@ const TextInput = ({
   enableable,
   text,
   setText,
-}: TextInputProps) => <Input
-  type='text'
-  disabled={enableable ? !enableable.enabled : false}
-  value={text}
-  onChange={(event) => setText(event.target.value)}
-  placeholder={prompt}
-/>;
+}: TextInputProps) => (
+  <Input
+    type="text"
+    disabled={enableable ? !enableable.enabled : false}
+    value={text}
+    onChange={(event) => setText(event.target.value)}
+    placeholder={prompt}
+  />
+);
 
 export default TextInput;

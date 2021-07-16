@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Card,
@@ -26,121 +26,127 @@ const AbilityFilterDisplay = ({
   abilityfilter,
   setAbilityFilter,
   removeSelf,
-}: AbilityFilterDisplayProps) => <Card
-  title={<CheckboxLabel
-    label='Enable filter'
-    enableable={{
-      enabled: abilityfilter.enabled,
-      setEnabled: (enabled) => setAbilityFilter({
-        ...abilityfilter,
-        enabled,
-      })
-    }}
-  />}
-  extra={<Button
-    type='primary'
-    danger
-    onClick={removeSelf}
+}: AbilityFilterDisplayProps) => (
+  <Card
+    title={(
+      <CheckboxLabel
+        label="Enable filter"
+        enableable={{
+          enabled: abilityfilter.enabled,
+          setEnabled: (enabled) => setAbilityFilter({
+            ...abilityfilter,
+            enabled,
+          }),
+        }}
+      />
+)}
+    extra={(
+      <Button
+        type="primary"
+        danger
+        onClick={removeSelf}
+      >
+        Delete
+      </Button>
+)}
   >
-    Delete
-  </Button>}
->
-  <Form size='small' colon={false} labelAlign='left' labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
-    <ManagedFormItem
-      label='Ability name'
-      enableable={{
-        enabled: abilityfilter.value.name.enabled,
-        setEnabled: (enabled) => setAbilityFilter({
-          ...abilityfilter,
-          value: {
-            ...abilityfilter.value,
-            name: {
-              ...abilityfilter.value.name,
-              enabled,
-            }
-          },
-        })
-      }}
-      inputs={[{
-        type: 'textSelect',
-        prompt: 'Ability name to match',
-        text: abilityfilter.value.name.value,
-        setText:( text) => setAbilityFilter({
-          ...abilityfilter,
-          value: {
-            ...abilityfilter.value,
-            name: {
-              enabled: abilityfilter.value.name.enabled,
-              value: text,
-            }
-          },
-        })
-      }]}
-    />
-    <ManagedFormItem
-      label='Ability type'
-      enableable={{
-        enabled: abilityfilter.value.type.enabled,
-        setEnabled: (enabled) => setAbilityFilter({
-          ...abilityfilter,
-          value: {
-            ...abilityfilter.value,
-            type: {
-              ...abilityfilter.value.type,
-              enabled,
-            }
-          },
-        })
-      }}
-      inputs={[{
-        type: 'textSelect',
-        prompt: 'Ability type to match',
-        text: abilityfilter.value.type.value,
-        setText: (text) => setAbilityFilter({
-          ...abilityfilter,
-          value: {
-            ...abilityfilter.value,
-            type: {
-              enabled: abilityfilter.value.type.enabled,
-              value: text,
-            }
-          },
-        }),
-      }]}
-    />
-    <ManagedFormItem
-      label='Effect text'
-      enableable={{
-        enabled: abilityfilter.value.text.enabled,
-        setEnabled: (enabled) => setAbilityFilter({
-          ...abilityfilter,
-          value: {
-            ...abilityfilter.value,
-            text: {
-              ...abilityfilter.value.text,
-              enabled,
-            }
-          },
-        })
-      }}
-      inputs={[{
-        type: 'textSelect',
-        prompt: 'Effect text to match',
-        text: abilityfilter.value.text.value,
-        setText: (text) => setAbilityFilter({
-          ...abilityfilter,
-          value: {
-            ...abilityfilter.value,
-            text: {
-              enabled: abilityfilter.value.text.enabled,
-              value: text,
-            }
-          },
-        }),
-      }]}
-    />
-  </Form>
-</Card>;
+    <Form size="small" colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
+      <ManagedFormItem
+        label="Ability name"
+        enableable={{
+          enabled: abilityfilter.value.name.enabled,
+          setEnabled: (enabled) => setAbilityFilter({
+            ...abilityfilter,
+            value: {
+              ...abilityfilter.value,
+              name: {
+                ...abilityfilter.value.name,
+                enabled,
+              },
+            },
+          }),
+        }}
+        inputs={[{
+          type: 'textSelect',
+          prompt: 'Ability name to match',
+          text: abilityfilter.value.name.value,
+          setText: (text) => setAbilityFilter({
+            ...abilityfilter,
+            value: {
+              ...abilityfilter.value,
+              name: {
+                enabled: abilityfilter.value.name.enabled,
+                value: text,
+              },
+            },
+          }),
+        }]}
+      />
+      <ManagedFormItem
+        label="Ability type"
+        enableable={{
+          enabled: abilityfilter.value.type.enabled,
+          setEnabled: (enabled) => setAbilityFilter({
+            ...abilityfilter,
+            value: {
+              ...abilityfilter.value,
+              type: {
+                ...abilityfilter.value.type,
+                enabled,
+              },
+            },
+          }),
+        }}
+        inputs={[{
+          type: 'textSelect',
+          prompt: 'Ability type to match',
+          text: abilityfilter.value.type.value,
+          setText: (text) => setAbilityFilter({
+            ...abilityfilter,
+            value: {
+              ...abilityfilter.value,
+              type: {
+                enabled: abilityfilter.value.type.enabled,
+                value: text,
+              },
+            },
+          }),
+        }]}
+      />
+      <ManagedFormItem
+        label="Effect text"
+        enableable={{
+          enabled: abilityfilter.value.text.enabled,
+          setEnabled: (enabled) => setAbilityFilter({
+            ...abilityfilter,
+            value: {
+              ...abilityfilter.value,
+              text: {
+                ...abilityfilter.value.text,
+                enabled,
+              },
+            },
+          }),
+        }}
+        inputs={[{
+          type: 'textSelect',
+          prompt: 'Effect text to match',
+          text: abilityfilter.value.text.value,
+          setText: (text) => setAbilityFilter({
+            ...abilityfilter,
+            value: {
+              ...abilityfilter.value,
+              text: {
+                enabled: abilityfilter.value.text.enabled,
+                value: text,
+              },
+            },
+          }),
+        }]}
+      />
+    </Form>
+  </Card>
+);
 
 const addNewAbilityFilter = (
   abilitiesFilter: AbilitiesFilter,
@@ -184,27 +190,34 @@ interface AbilitiesFilterDisplayFormProps {
 const AbilitiesFilterDisplayForm = ({
   abilitiesFilter,
   setAbilitiesFilter,
-}: AbilitiesFilterDisplayFormProps) => <Form size='small' colon={false} labelAlign='left' labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
-  {
-    abilitiesFilter.map((abilityFilter, abilityFilterIndex) => <AbilityFilterDisplay
-      abilityfilter={abilityFilter}
-      setAbilityFilter={(abilityFilter: EnableableFilter<AbilityFilter>) => {
-        setAbilitiesFilter(updateAbilityFilter(
+}: AbilitiesFilterDisplayFormProps) => (
+  <Form size="small" colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
+    {
+    abilitiesFilter.map((abilityFilter, abilityFilterIndex) => (
+      <AbilityFilterDisplay
+        abilityfilter={abilityFilter}
+        setAbilityFilter={(enableableAbilityFilter: EnableableFilter<AbilityFilter>) => {
+          setAbilitiesFilter(updateAbilityFilter(
+            abilitiesFilter,
+            enableableAbilityFilter,
+            abilityFilterIndex,
+          ));
+        }}
+        removeSelf={() => setAbilitiesFilter(removeAbilityFilter(
           abilitiesFilter,
-          abilityFilter,
           abilityFilterIndex,
-        ));
-      }}
-      removeSelf={() => setAbilitiesFilter(removeAbilityFilter(abilitiesFilter, abilityFilterIndex))}
-    />)
+        ))}
+      />
+    ))
   }
-  <Button
-    type='primary'
-    onClick={() => setAbilitiesFilter(addNewAbilityFilter(abilitiesFilter))}
-  >
-    Add Filter
-  </Button>
-</Form>;
+    <Button
+      type="primary"
+      onClick={() => setAbilitiesFilter(addNewAbilityFilter(abilitiesFilter))}
+    >
+      Add Filter
+    </Button>
+  </Form>
+);
 
 interface AbilitiesFilterDisplayProps {
   enableable: Enableable;
@@ -219,26 +232,28 @@ const AbilitiesFilterDisplay = ({
 }: AbilitiesFilterDisplayProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  return <Form.Item label={<CheckboxLabel label={'Abilities'} enableable={enableable} />}>
-    <Button
-      disabled={!enableable.enabled}
-      onClick={() => setIsModalOpen(true)}
-    >
-      Open Ability Filters
-    </Button>
-    <Modal
-      visible={isModalOpen}
-      onCancel={() => setIsModalOpen(false)}
-      onOk={() => setIsModalOpen(false)}
-      closable={false}
-      footer={<Button onClick={() => setIsModalOpen(false)}>Close</Button>}
-    >
-      <AbilitiesFilterDisplayForm
-        abilitiesFilter={abilitiesFilter}
-        setAbilitiesFilter={setAbilitiesFilter}
-      />
-    </Modal>
-  </Form.Item>;
+  return (
+    <Form.Item label={<CheckboxLabel label="Abilities" enableable={enableable} />}>
+      <Button
+        disabled={!enableable.enabled}
+        onClick={() => setIsModalOpen(true)}
+      >
+        Open Ability Filters
+      </Button>
+      <Modal
+        visible={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        onOk={() => setIsModalOpen(false)}
+        closable={false}
+        footer={<Button onClick={() => setIsModalOpen(false)}>Close</Button>}
+      >
+        <AbilitiesFilterDisplayForm
+          abilitiesFilter={abilitiesFilter}
+          setAbilitiesFilter={setAbilitiesFilter}
+        />
+      </Modal>
+    </Form.Item>
+  );
 };
 
 export default AbilitiesFilterDisplay;

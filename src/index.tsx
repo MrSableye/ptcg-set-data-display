@@ -9,5 +9,5 @@ ReactDOM.render(
   <React.StrictMode>
     <App cache={cardCache} />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );

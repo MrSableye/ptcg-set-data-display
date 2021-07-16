@@ -44,4 +44,8 @@ export interface TextInputFields {
   setText: (text: string) => void;
 }
 
-export type InputFields = BooleanSelectFields | MultiSelectFields | RangeSelectFields | TextInputFields;
+export type InputFields =
+  BooleanSelectFields |
+  MultiSelectFields |
+  RangeSelectFields |
+  TextInputFields;

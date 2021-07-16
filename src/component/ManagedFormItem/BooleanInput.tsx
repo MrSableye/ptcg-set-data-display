@@ -1,3 +1,4 @@
+import React from 'react';
 import { Checkbox } from 'antd';
 import { BaseFields, BooleanSelectFields } from './types';
 
@@ -8,12 +9,14 @@ const BooleanInput = ({
   enableable,
   selected,
   setSelected,
-}: BooleanSelectProps) => <Checkbox
-  disabled={enableable ? !enableable.enabled : false}
-  checked={selected}
-  onChange={(event) => setSelected(event.target.checked)}
->
-  {prompt}
-</Checkbox>;
+}: BooleanSelectProps) => (
+  <Checkbox
+    disabled={enableable ? !enableable.enabled : false}
+    checked={selected}
+    onChange={(event) => setSelected(event.target.checked)}
+  >
+    {prompt}
+  </Checkbox>
+);
 
 export default BooleanInput;

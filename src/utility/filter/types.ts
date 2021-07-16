@@ -5,7 +5,7 @@ export type Filter = {
     name: K,
     value: FiltersType[K],
   }
-}[keyof Card]
+}[keyof Card];
 
 export type FilterPredicate<T, F> = (source: T, filter: F) => boolean;
 
@@ -68,4 +68,4 @@ export interface FiltersType {
 
 export type Filters = {
   [K in keyof Card]: FilterPredicate<Card, FiltersType[K]>;
-}
+};
