@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Collapse, Form } from 'antd';
+import {
+  Collapse, Divider, Form, Layout, Space,
+} from 'antd';
+import Icon, { GithubFilled, TwitterOutlined } from '@ant-design/icons';
 import { Cache, getCardsForSets } from 'utility/card';
 import { Filter, filterCards, filterDuplicateCards } from 'utility/filter';
 import CardFilter from 'component/CardFilter';
@@ -11,6 +14,23 @@ import Header from './Header';
 interface AppProps {
   cache: Cache;
 }
+
+const twitchLogo = () => (
+  <svg width="1em" height="1em" viewBox="0 0 2400 2800" fill="currentColor">
+    <g>
+      <path d="M500,0L0,500v1800h600v500l500-500h400l900-900V0H500z M2200,1300l-400,400h-400l-350,350v-350H600V200h1600V1300z" />
+      <rect x="1700" y="550" width="200" height="600" />
+      <rect x="1150" y="550" width="200" height="600" />
+    </g>
+  </svg>
+);
+
+const IconText = ({ icon, text }: any) => (
+  <Space>
+    {React.createElement(icon)}
+    {text}
+  </Space>
+);
 
 const App = ({ cache }: AppProps) => {
   const [setIds, setSetIds] = useState<string[]>([]);
@@ -26,65 +46,93 @@ const App = ({ cache }: AppProps) => {
   cards = filterDuplicates ? filterDuplicateCards(cards) : cards;
 
   return (
-    <div>
+    <Layout>
       <Header />
-      <Collapse style={{ width: '100%' }} bordered={false} defaultActiveKey={['settings', 'filters']}>
-        <Collapse.Panel
-          key="settings"
-          header="Settings"
-        >
-          <Form size="small">
-            <ManagedFormItem
-              label="Sets"
-              inputs={[{
-                type: 'multiSelect',
-                prompt: 'Sets to select from',
-                options: cache.sets.map((set) => ({
-                  value: set.id,
-                  label: `${set.name} (${set.ptcgoCode || set.id})`,
-                })),
-                selectedOptions: setIds,
-                setSelectedOptions: setSetIds,
-              }]}
+      <Layout.Content>
+        <Collapse style={{ width: '100%' }} bordered={false} defaultActiveKey={['settings', 'filters']}>
+          <Collapse.Panel
+            key="settings"
+            header="Settings"
+          >
+            <Form size="small">
+              <ManagedFormItem
+                label="Sets"
+                inputs={[{
+                  type: 'multiSelect',
+                  prompt: 'Sets to select from',
+                  options: cache.sets.map((set) => ({
+                    value: set.id,
+                    label: `${set.name} (${set.ptcgoCode || set.id})`,
+                  })),
+                  selectedOptions: setIds,
+                  setSelectedOptions: setSetIds,
+                }]}
+              />
+              <ManagedFormItem
+                label="Filter identical cards"
+                inputs={[{
+                  type: 'booleanSelect',
+                  prompt: 'Filter identical cards',
+                  selected: filterDuplicates,
+                  setSelected: setFilterDuplicates,
+                }]}
+              />
+            </Form>
+          </Collapse.Panel>
+          <Collapse.Panel
+            key="filters"
+            header="Filters"
+          >
+            <CardFilter
+              supertypes={cache.supertypes}
+              subtypes={cache.subtypes}
+              types={cache.types}
+              rarities={cache.rarities}
+              setFilters={setFilters}
+              setExcludeFilters={setExcludeFilters}
             />
-            <ManagedFormItem
-              label="Filter identical cards"
-              inputs={[{
-                type: 'booleanSelect',
-                prompt: 'Filter identical cards',
-                selected: filterDuplicates,
-                setSelected: setFilterDuplicates,
-              }]}
+          </Collapse.Panel>
+          <Collapse.Panel
+            key="stats"
+            header="Stats"
+          >
+            <CardStat cards={cards} />
+          </Collapse.Panel>
+          <Collapse.Panel
+            key="cards"
+            header="Cards"
+          >
+            <CardList rowSize={6} cards={cards} />
+          </Collapse.Panel>
+        </Collapse>
+      </Layout.Content>
+      <Layout.Footer style={{ textAlign: 'center' }}>
+        <div>
+          <span>Powered by the </span>
+          <a href="https://pokemontcg.io/">Pokémon TCG API</a>
+        </div>
+        <div>
+          <a href="https://twitter.com/MisterSableye">
+            <IconText icon={TwitterOutlined} text="MisterSableye" />
+          </a>
+          <Divider type="vertical" />
+          <a href="https://github.com/MrSableye">
+            <IconText icon={GithubFilled} text="MrSableye" />
+          </a>
+          <Divider type="vertical" />
+          <a href="https://twitch.tv/MisterSableye">
+            <IconText
+              icon={() => (
+                <Icon
+                  component={twitchLogo}
+                />
+              )}
+              text="MisterSableye"
             />
-          </Form>
-        </Collapse.Panel>
-        <Collapse.Panel
-          key="filters"
-          header="Filters"
-        >
-          <CardFilter
-            supertypes={cache.supertypes}
-            subtypes={cache.subtypes}
-            types={cache.types}
-            rarities={cache.rarities}
-            setFilters={setFilters}
-            setExcludeFilters={setExcludeFilters}
-          />
-        </Collapse.Panel>
-        <Collapse.Panel
-          key="stats"
-          header="Stats"
-        >
-          <CardStat cards={cards} />
-        </Collapse.Panel>
-        <Collapse.Panel
-          key="cards"
-          header="Cards"
-        >
-          <CardList rowSize={6} cards={cards} />
-        </Collapse.Panel>
-      </Collapse>
-    </div>
+          </a>
+        </div>
+      </Layout.Footer>
+    </Layout>
   );
 };
 
