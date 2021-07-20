@@ -3,7 +3,7 @@ import {
   Collapse, Divider, Form, Layout, Space,
 } from 'antd';
 import Icon, { GithubFilled, TwitterOutlined } from '@ant-design/icons';
-import { Cache, getCardsForSets } from 'utility/card';
+import { Cache, getCardsForSets, groupSets } from 'utility/card';
 import { Filter, filterCards, filterDuplicateCards } from 'utility/filter';
 import CardFilter from 'component/CardFilter';
 import CardList from 'component/CardList';
@@ -45,6 +45,8 @@ const App = ({ cache }: AppProps) => {
   );
   cards = filterDuplicates ? filterDuplicateCards(cards) : cards;
 
+  const groupedSets = groupSets(cache.sets);
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Header />
@@ -59,12 +61,18 @@ const App = ({ cache }: AppProps) => {
                 label="Sets"
                 tooltip="Search for cards within the given sets"
                 inputs={[{
-                  type: 'multiSelect',
+                  type: 'groupedMultiSelect',
                   prompt: 'Sets to select from',
-                  options: cache.sets.map((set) => ({
-                    value: set.id,
-                    label: `${set.name} (${set.ptcgoCode || set.id})`,
-                  })),
+                  groupedOptions: groupedSets.reduce((
+                    displayGrouping,
+                    series,
+                  ) => ({
+                    ...displayGrouping,
+                    [series.name]: series.sets.map((set) => ({
+                      value: set.id,
+                      label: `${set.name} (${set.ptcgoCode || set.id})`,
+                    })),
+                  }), {}),
                   selectedOptions: setIds,
                   setSelectedOptions: setSetIds,
                 }]}

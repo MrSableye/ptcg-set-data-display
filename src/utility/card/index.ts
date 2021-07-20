@@ -1,3 +1,4 @@
+import { groupBy } from 'lodash';
 import cardCache from './cache.json';
 import {
   Ability,
@@ -25,7 +26,22 @@ const getCardsForSets = (
   return [...cards, ...setCards];
 }, [] as Card[]);
 
-export { typedCardCache as cardCache, getCardsForSets };
+const groupSets = (sets: Set[]) => {
+  const groupedSets = groupBy(sets, (set) => set.series);
+
+  return Object.entries(groupedSets)
+    .map(([seriesName, seriesSets]) => ({
+      name: seriesName,
+      sets: seriesSets,
+      releaseDate: [...seriesSets].sort((
+        setA,
+        setB,
+      ) => setA.releaseDate.localeCompare(setB.releaseDate))[0].releaseDate,
+    }))
+    .sort((seriesA, seriesB) => seriesB.releaseDate.localeCompare(seriesA.releaseDate));
+};
+
+export { typedCardCache as cardCache, getCardsForSets, groupSets };
 export type {
   Ability,
   AncientTrait,

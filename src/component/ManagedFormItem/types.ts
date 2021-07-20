@@ -29,6 +29,14 @@ export interface MultiSelectFields {
   setSelectedOptions: (options: string[]) => void;
 }
 
+export interface GroupedMultiSelectFields {
+  type: 'groupedMultiSelect';
+  prompt: string;
+  groupedOptions: Record<string, OptionWithLabel[]>;
+  selectedOptions: string[];
+  setSelectedOptions: (options: string[]) => void;
+}
+
 export interface RangeSelectFields {
   type: 'rangeSelect';
   step: number;
@@ -47,5 +55,6 @@ export interface TextInputFields {
 export type InputFields =
   BooleanSelectFields |
   MultiSelectFields |
+  GroupedMultiSelectFields |
   RangeSelectFields |
   TextInputFields;

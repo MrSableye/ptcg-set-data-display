@@ -3,6 +3,7 @@ import { Form } from 'antd';
 import BooleanInput from './BooleanInput';
 import CheckboxLabel from './CheckboxLabel';
 import MultiSelect from './MultiSelect';
+import GroupedMultiSelect from './GroupedMultiSelect';
 import RangeSelect from './RangeSelect';
 import TextInput from './TextInput';
 import { BaseFields, Enableable, InputFields } from './types';
@@ -34,6 +35,17 @@ const FormItem = ({
         enableable={baseFields.enableable}
         prompt={inputFields.prompt}
         options={inputFields.options}
+        selectedOptions={inputFields.selectedOptions}
+        setSelectedOptions={inputFields.setSelectedOptions}
+      />
+    );
+    case 'groupedMultiSelect': return (
+      <GroupedMultiSelect
+        type="groupedMultiSelect"
+        label={baseFields.label}
+        enableable={baseFields.enableable}
+        prompt={inputFields.prompt}
+        groupedOptions={inputFields.groupedOptions}
         selectedOptions={inputFields.selectedOptions}
         setSelectedOptions={inputFields.setSelectedOptions}
       />
