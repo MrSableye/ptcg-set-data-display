@@ -240,6 +240,7 @@ const CardFilter = ({
         <Col span={12}>
           <ManagedFormItem
             label="Name"
+            tooltip="Searches for cards with the given name"
             enableable={{ enabled: nameFilterEnabled, setEnabled: setNameFilterEnabled }}
             inputs={[{
               type: 'textSelect',
@@ -250,6 +251,7 @@ const CardFilter = ({
           />
           <ManagedFormItem
             label="Name Exclusion"
+            tooltip="Filters out cards that do not match the given name"
             enableable={{
               enabled: nameExcludeFilterEnabled,
               setEnabled: setNameExcludeFilterEnabled,
@@ -263,6 +265,7 @@ const CardFilter = ({
           />
           <ManagedFormItem
             label="Supertype"
+            tooltip="Searches for cards that match any of the given supertypes"
             enableable={{ enabled: supertypeFilterEnabled, setEnabled: setSupertypeFilterEnabled }}
             inputs={[{
               type: 'multiSelect',
@@ -274,6 +277,7 @@ const CardFilter = ({
           />
           <ManagedFormItem
             label="Subtype"
+            tooltip="Searches for cards that match any of the given supertypes or all if selected"
             enableable={{ enabled: subtypeFilterEnabled, setEnabled: setSubtypeFilterEnabled }}
             inputs={[{
               type: 'multiSelect',
@@ -296,6 +300,7 @@ const CardFilter = ({
           />
           <ManagedFormItem
             label="Subtype Exclusion"
+            tooltip="Filters out cards that match any of the given supertypes"
             enableable={{
               enabled: subtypeExcludeFilterEnabled,
               setEnabled: setSubtypeExcludeFilterEnabled,
@@ -310,6 +315,7 @@ const CardFilter = ({
           />
           <ManagedFormItem
             label="Type"
+            tooltip="Searches for cards that match any of the given types or all if selected"
             enableable={{ enabled: typeFilterEnabled, setEnabled: setTypeFilterEnabled }}
             inputs={[{
               type: 'multiSelect',
@@ -332,6 +338,7 @@ const CardFilter = ({
           />
           <ManagedFormItem
             label="Type Exclusion"
+            tooltip="Filters out cards that match any of the given types"
             enableable={{
               enabled: typeExcludeFilterEnabled,
               setEnabled: setTypeExcludeFilterEnabled,
@@ -346,6 +353,7 @@ const CardFilter = ({
           />
           <ManagedFormItem
             label="Level"
+            tooltip="Searches for cards with the given level"
             enableable={{ enabled: levelFilterEnabled, setEnabled: setLevelFilterEnabled }}
             inputs={[{
               type: 'textSelect',
@@ -356,6 +364,7 @@ const CardFilter = ({
           />
           <ManagedFormItem
             label="HP"
+            tooltip="Searches for cards within a range of HP"
             enableable={{ enabled: hpFilterEnabled, setEnabled: setHpFilterEnabled }}
             inputs={[{
               type: 'rangeSelect',
@@ -367,6 +376,7 @@ const CardFilter = ({
           />
           <ManagedFormItem
             label="Retreat"
+            tooltip="Searches for cards within a range of retreat values"
             enableable={{ enabled: retreatFilterEnabled, setEnabled: setRetreatFilterEnabled }}
             inputs={[{
               type: 'rangeSelect',
@@ -380,6 +390,7 @@ const CardFilter = ({
         <Col span={12}>
           <ManagedFormItem
             label="Evolution"
+            tooltip="Searches for cards that are or are not evolution Pokémon"
             enableable={{
               enabled: isEvolutionFilterEnabled,
               setEnabled: setIsEvolutionFilterEnabled,
@@ -393,6 +404,7 @@ const CardFilter = ({
           />
           <ManagedFormItem
             label="Evolves"
+            tooltip="Searches for cards that are or are not able to evolve"
             enableable={{ enabled: evolvesFilterEnabled, setEnabled: setEvolvesFilterEnabled }}
             inputs={[{
               type: 'booleanSelect',
@@ -403,6 +415,7 @@ const CardFilter = ({
           />
           <ManagedFormItem
             label="Weakness"
+            tooltip="Searches for cards that have any of the given weaknesses"
             enableable={{ enabled: weaknessFilterEnabled, setEnabled: setWeaknessFilterEnabled }}
             inputs={[{
               type: 'multiSelect',
@@ -414,6 +427,7 @@ const CardFilter = ({
           />
           <ManagedFormItem
             label="Weakness Exclusion"
+            tooltip="Filters out cards that have any of the given weaknesses"
             enableable={{
               enabled: weaknessExcludeFilterEnabled,
               setEnabled: setWeaknessExcludeFilterEnabled,
@@ -428,6 +442,7 @@ const CardFilter = ({
           />
           <ManagedFormItem
             label="Resistance"
+            tooltip="Searches for cards that have any of the given resistances"
             enableable={{
               enabled: resistanceFilterEnabled,
               setEnabled: setResistanceFilterEnabled,
@@ -442,6 +457,7 @@ const CardFilter = ({
           />
           <ManagedFormItem
             label="Resistance Exclusion"
+            tooltip="Filters out cards that have any of the given resistances"
             enableable={{
               enabled: resistanceExcludeFilterEnabled,
               setEnabled: setResistanceExcludeFilterEnabled,
@@ -456,6 +472,7 @@ const CardFilter = ({
           />
           <ManagedFormItem
             label="Rarity"
+            tooltip="Searches for cards that match any of the given rarities"
             enableable={{ enabled: rarityFilterEnabled, setEnabled: setRarityFilterEnabled }}
             inputs={[{
               type: 'multiSelect',
@@ -467,6 +484,7 @@ const CardFilter = ({
           />
           <ManagedFormItem
             label="Rarity Exclusion"
+            tooltip="Filters out cards that match any of the given rarities"
             enableable={{
               enabled: rarityExcludeFilterEnabled,
               setEnabled: setRarityFilterExcludeEnabled,
@@ -481,6 +499,7 @@ const CardFilter = ({
           />
           <ManagedFormItem
             label="Flavor Text"
+            tooltip="Searches for cards with the given flavor text"
             enableable={{
               enabled: flavorTextFilterEnabled,
               setEnabled: setFlavorTextFilterEnabled,
@@ -494,6 +513,7 @@ const CardFilter = ({
           />
           <ManagedFormItem
             label="Flavor Text Exclusion"
+            tooltip="Filters out cards with the given flavor text"
             enableable={{
               enabled: flavorTextExcludeFilterEnabled,
               setEnabled: setFlavorTextExcludeFilterEnabled,
@@ -506,11 +526,13 @@ const CardFilter = ({
             }]}
           />
           <AttacksFilterDisplay
+            tooltip="Searches for cards with attacks matching a variety of attributes"
             enableable={{ enabled: attacksFilterEnabled, setEnabled: setAttacksFilterEnabled }}
             attacksFilter={attacksFilter}
             setAttacksFilter={setAttacksFilter}
           />
           <AbilitiesFilterDisplay
+            tooltip="Searches for cards with abilities matching a variety of attributes"
             enableable={{ enabled: abilitiesFilterEnabled, setEnabled: setAbilitiesFilterEnabled }}
             abilitiesFilter={abilitiesFilter}
             setAbilitiesFilter={setAbilitiesFilter}

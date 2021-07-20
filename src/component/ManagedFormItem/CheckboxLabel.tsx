@@ -8,26 +8,26 @@ interface CheckboxLabelProps {
   enableable?: Enableable
 }
 
-const InnerCheckboxLabel = ({ label, enableable }: CheckboxLabelProps) => (
+const InnerCheckboxLabel = ({ label, tooltip }: CheckboxLabelProps) => (
+  tooltip
+    ? (
+      <Tooltip title={tooltip}>
+        {label}
+      </Tooltip>
+    )
+    : <span>{label}</span>
+);
+
+const CheckboxLabel = ({ label, tooltip, enableable }: CheckboxLabelProps) => (
   enableable
     ? (
       <Checkbox
         checked={enableable.enabled}
         onChange={(event) => enableable.setEnabled(event.target.checked)}
       >
-        {label}
+        <InnerCheckboxLabel label={label} tooltip={tooltip} enableable={enableable} />
       </Checkbox>
     )
-    : <span>{label}</span>);
-
-const CheckboxLabel = ({ label, tooltip, enableable }: CheckboxLabelProps) => (
-  tooltip
-    ? (
-      <Tooltip title={tooltip}>
-        <InnerCheckboxLabel label={label} enableable={enableable} />
-      </Tooltip>
-    )
-    : <InnerCheckboxLabel label={label} enableable={enableable} />
-);
+    : <InnerCheckboxLabel label={label} tooltip={tooltip} enableable={enableable} />);
 
 export default CheckboxLabel;

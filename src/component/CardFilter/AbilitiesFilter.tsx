@@ -53,6 +53,7 @@ const AbilityFilterDisplay = ({
     <Form size="small" colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
       <ManagedFormItem
         label="Ability name"
+        tooltip="Searches for cards with an ability with the given name"
         enableable={{
           enabled: abilityfilter.value.name.enabled,
           setEnabled: (enabled) => setAbilityFilter({
@@ -84,6 +85,7 @@ const AbilityFilterDisplay = ({
       />
       <ManagedFormItem
         label="Ability type"
+        tooltip="Searches for cards with an ability with the given type"
         enableable={{
           enabled: abilityfilter.value.type.enabled,
           setEnabled: (enabled) => setAbilityFilter({
@@ -115,6 +117,7 @@ const AbilityFilterDisplay = ({
       />
       <ManagedFormItem
         label="Effect text"
+        tooltip="Searches for cards with an ability with the given effect"
         enableable={{
           enabled: abilityfilter.value.text.enabled,
           setEnabled: (enabled) => setAbilityFilter({
@@ -221,19 +224,21 @@ const AbilitiesFilterDisplayForm = ({
 
 interface AbilitiesFilterDisplayProps {
   enableable: Enableable;
+  tooltip?: string;
   abilitiesFilter: AbilitiesFilter;
   setAbilitiesFilter: (abilitiesFilter: AbilitiesFilter) => void;
 }
 
 const AbilitiesFilterDisplay = ({
   enableable,
+  tooltip,
   abilitiesFilter,
   setAbilitiesFilter,
 }: AbilitiesFilterDisplayProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <Form.Item label={<CheckboxLabel label="Abilities" enableable={enableable} />}>
+    <Form.Item label={<CheckboxLabel label="Abilities" enableable={enableable} tooltip={tooltip} />}>
       <Button
         disabled={!enableable.enabled}
         onClick={() => setIsModalOpen(true)}

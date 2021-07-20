@@ -53,6 +53,7 @@ const AttackFilterDisplay = ({
     <Form size="small" colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
       <ManagedFormItem
         label="Attack name"
+        tooltip="Searches for cards with an attack with the given name"
         enableable={{
           enabled: attackFilter.value.name.enabled,
           setEnabled: (enabled) => setAttackFilter({
@@ -84,6 +85,7 @@ const AttackFilterDisplay = ({
       />
       <ManagedFormItem
         label="Effect text"
+        tooltip="Searches for cards with an attack with the given effect"
         enableable={{
           enabled: attackFilter.value.text.enabled,
           setEnabled: (enabled) => setAttackFilter({
@@ -115,6 +117,7 @@ const AttackFilterDisplay = ({
       />
       <ManagedFormItem
         label="Attack slot"
+        tooltip="Searches for cards with an attack slot within the given range"
         enableable={{
           enabled: attackFilter.value.slot.enabled,
           setEnabled: (enabled) => setAttackFilter({
@@ -147,6 +150,7 @@ const AttackFilterDisplay = ({
       />
       <ManagedFormItem
         label="Cost"
+        tooltip="Searches for cards with a cost within the given range"
         enableable={{
           enabled: attackFilter.value.cost.enabled,
           setEnabled: (enabled) => setAttackFilter({
@@ -179,6 +183,7 @@ const AttackFilterDisplay = ({
       />
       <ManagedFormItem
         label="Damage"
+        tooltip="Searches for cards with damage within the given range"
         enableable={{
           enabled: attackFilter.value.damage.enabled,
           setEnabled: (enabled) => setAttackFilter({
@@ -285,19 +290,21 @@ const AttacksFilterDisplayForm = ({
 
 interface AttacksFilterDisplayProps {
   enableable: Enableable;
+  tooltip?: string;
   attacksFilter: AttacksFilter;
   setAttacksFilter: (attacksFilter: AttacksFilter) => void;
 }
 
 const AttacksFilterDisplay = ({
   enableable,
+  tooltip,
   attacksFilter,
   setAttacksFilter,
 }: AttacksFilterDisplayProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <Form.Item label={<CheckboxLabel label="Attacks" enableable={enableable} />}>
+    <Form.Item label={<CheckboxLabel label="Attacks" enableable={enableable} tooltip={tooltip} />}>
       <Button
         disabled={!enableable.enabled}
         onClick={() => setIsModalOpen(true)}

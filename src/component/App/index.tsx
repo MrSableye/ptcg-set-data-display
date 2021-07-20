@@ -57,6 +57,7 @@ const App = ({ cache }: AppProps) => {
             <Form size="small">
               <ManagedFormItem
                 label="Sets"
+                tooltip="Search for cards within the given sets"
                 inputs={[{
                   type: 'multiSelect',
                   prompt: 'Sets to select from',
@@ -70,6 +71,7 @@ const App = ({ cache }: AppProps) => {
               />
               <ManagedFormItem
                 label="Filter identical cards"
+                tooltip="Filter cards that are mechanically identical"
                 inputs={[{
                   type: 'booleanSelect',
                   prompt: 'Filter identical cards',
