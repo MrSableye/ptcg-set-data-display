@@ -46,7 +46,7 @@ const App = ({ cache }: AppProps) => {
   cards = filterDuplicates ? filterDuplicateCards(cards) : cards;
 
   return (
-    <Layout>
+    <Layout style={{ minHeight: '100vh' }}>
       <Header />
       <Layout.Content>
         <Collapse style={{ width: '100%' }} bordered={false} defaultActiveKey={['settings', 'filters']}>
