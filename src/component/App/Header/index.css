@@ -44,3 +44,12 @@
     background-size: 46px 44x;
     animation-delay: 8s;
 }
+
+.passive-aggressive-message {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: auto;
+    color: white;
+    background-color: #001529;
+}
