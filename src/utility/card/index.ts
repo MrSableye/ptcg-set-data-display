@@ -1,5 +1,4 @@
 import { groupBy } from 'lodash';
-import cardCache from './cache.json';
 import {
   Ability,
   AncientTrait,
@@ -15,7 +14,10 @@ import {
   WeaknessOrResistance,
 } from './types';
 
-const typedCardCache = cardCache as Cache;
+const getCardCache = async (): Promise<Cache> => {
+  const { default: cache } = await import('./cache.json');
+  return cache as Cache;
+};
 
 const getCardsForSets = (
   cache: Cache,
@@ -41,7 +43,7 @@ const groupSets = (sets: Set[]) => {
     .sort((seriesA, seriesB) => seriesB.releaseDate.localeCompare(seriesA.releaseDate));
 };
 
-export { typedCardCache as cardCache, getCardsForSets, groupSets };
+export { getCardCache, getCardsForSets, groupSets };
 export type {
   Ability,
   AncientTrait,

@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Collapse, Divider, Form, Layout, Space,
 } from 'antd';
 import Icon, { GithubFilled, TwitterOutlined } from '@ant-design/icons';
-import { Cache, getCardsForSets, groupSets } from 'utility/card';
+import {
+  Cache,
+  getCardCache,
+  getCardsForSets,
+  groupSets,
+} from 'utility/card';
 import { Filter, filterCards, filterDuplicateCards } from 'utility/filter';
 import CardFilter from 'component/CardFilter';
 import CardList from 'component/CardList';
 import CardStat from 'component/CardStat';
 import { ManagedFormItem } from 'component/ManagedFormItem';
 import Header from './Header';
-
-interface AppProps {
-  cache: Cache;
-}
 
 const twitchLogo = () => (
   <svg width="1em" height="1em" viewBox="0 0 2400 2800" fill="currentColor">
@@ -32,11 +33,23 @@ const IconText = ({ icon, text }: any) => (
   </Space>
 );
 
-const App = ({ cache }: AppProps) => {
+const App = () => {
+  const [cache, setCache] = useState<Cache>({
+    cards: {},
+    rarities: [],
+    sets: [],
+    subtypes: [],
+    supertypes: [],
+    types: [],
+  });
   const [setIds, setSetIds] = useState<string[]>([]);
   const [filterDuplicates, setFilterDuplicates] = useState(false);
   const [filters, setFilters] = useState<Filter[]>([]);
   const [excludeFilters, setExcludeFilters] = useState<Filter[]>([]);
+
+  useEffect(() => {
+    getCardCache().then((updatedCache) => setCache(updatedCache));
+  }, []);
 
   let cards = filterCards(
     getCardsForSets(cache, setIds),
