@@ -38,7 +38,7 @@ export interface Set {
 }
 
 export interface Legalities {
-  unlimited: string;
+  unlimited?: Nullable<string>;
   expanded?: Nullable<string>;
   standard?: Nullable<string>;
 }
