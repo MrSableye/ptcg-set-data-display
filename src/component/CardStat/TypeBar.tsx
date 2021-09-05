@@ -1,5 +1,7 @@
 import React from 'react';
+import { Tooltip } from 'antd';
 import { Count } from 'utility/stat';
+import './TypeBar.css';
 
 const round = (value: number) => Math.round(value * 100) / 100;
 
@@ -100,18 +102,22 @@ const TypeBar = ({ count }: TypeBarProps) => {
       typeData.map(([typeCount, typeConfig]) => {
         const percent = `${(100 * typeCount) / count.total}%`;
         return (
-          <span style={{
-            display: 'inline-block',
-            width: percent,
-            backgroundColor: typeConfig.color,
-            paddingTop: '1em',
-            paddingBottom: '1em',
-            textAlign: 'center',
-            whiteSpace: 'nowrap',
-          }}
-          >
-            {`${typeConfig.shortName} (${round((100 * typeCount) / count.total)}%)`}
-          </span>
+          <Tooltip title={`${typeCount} / ${count.total}`}>
+            <span
+              style={{
+                display: 'inline-block',
+                width: percent,
+                backgroundColor: typeConfig.color,
+                paddingTop: '1em',
+                paddingBottom: '1em',
+                textAlign: 'center',
+                whiteSpace: 'nowrap',
+              }}
+              className="type"
+            >
+              {`${typeConfig.shortName} (${round((100 * typeCount) / count.total)}%)`}
+            </span>
+          </Tooltip>
         );
       })
     }

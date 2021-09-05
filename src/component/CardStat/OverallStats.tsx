@@ -4,6 +4,7 @@ import {
   Col,
   Row,
   Statistic,
+  Tooltip,
   Typography,
 } from 'antd';
 import { OverallStats } from 'utility/stat';
@@ -36,7 +37,16 @@ const SubtypeDisplay = ({ stats }: { stats: OverallStats }) => {
         <Row gutter={16}>
           {subtypeChunk.map((subtypeData) => (
             <Col span={4}>
-              <Statistic title={`% ${subtypeData[0]}`} value={round((100 * subtypeData[1]) / stats.subtypeCounts.total)} suffix="%" />
+              <Statistic
+                title={`% ${subtypeData[0]}`}
+                formatter={(value) => (
+                  <Tooltip title={`${subtypeData[1]} / ${stats.subtypeCounts.total}`} placement="top">
+                    {value}
+                  </Tooltip>
+                )}
+                value={round((100 * subtypeData[1]) / stats.subtypeCounts.total)}
+                suffix="%"
+              />
             </Col>
           ))}
         </Row>
@@ -63,7 +73,16 @@ const RarityDisplay = ({ stats }: { stats: OverallStats }) => {
         <Row gutter={16}>
           {rarityChunk.map((rarityData) => (
             <Col span={4}>
-              <Statistic title={`% ${rarityData[0]}`} value={round((100 * rarityData[1]) / stats.rarityCounts.total)} suffix="%" />
+              <Statistic
+                title={`% ${rarityData[0]}`}
+                formatter={(value) => (
+                  <Tooltip title={`${rarityData[1]} / ${stats.rarityCounts.total}`} placement="top">
+                    {value}
+                  </Tooltip>
+                )}
+                value={round((100 * rarityData[1]) / stats.rarityCounts.total)}
+                suffix="%"
+              />
             </Col>
           ))}
         </Row>

@@ -3,6 +3,7 @@ import {
   Col,
   Row,
   Statistic,
+  Tooltip,
   Typography,
 } from 'antd';
 import { AttackStats, PokemonStats } from 'utility/stat';
@@ -20,30 +21,84 @@ const AttackStatsDisplay = ({
     </Typography.Title>
     <Row gutter={16}>
       <Col span={4}>
-        <Statistic title="% w/" value={round((100 * attackStat.moveCount) / stats.count)} suffix="%" />
+        <Statistic
+          title="% w/"
+          formatter={(value) => (
+            <Tooltip title={`${attackStat.moveCount} / ${stats.count}`} placement="top">
+              {value}
+            </Tooltip>
+          )}
+          value={round((100 * attackStat.moveCount) / stats.count)}
+          suffix="%"
+        />
       </Col>
       <Col span={4}>
         <Statistic title="Average Cost" value={round(attackStat.moveCost / attackStat.moveCount)} />
       </Col>
       <Col span={4}>
-        <Statistic title="% w/ Effect" value={round((100 * attackStat.moveEffectCount) / attackStat.moveCount)} suffix="%" />
+        <Statistic
+          title="% w/ Effect"
+          formatter={(value) => (
+            <Tooltip title={`${attackStat.moveEffectCount} / ${attackStat.moveCount}`} placement="top">
+              {value}
+            </Tooltip>
+          )}
+          value={round((100 * attackStat.moveEffectCount) / attackStat.moveCount)}
+          suffix="%"
+        />
       </Col>
     </Row>
     <Row gutter={16}>
       <Col span={4}>
-        <Statistic title="% Damaging" value={round((100 * attackStat.damageMoveCount) / attackStat.moveCount)} suffix="%" />
+        <Statistic
+          title="% Damaging"
+          formatter={(value) => (
+            <Tooltip title={`${attackStat.damageMoveCount} / ${attackStat.moveCount}`} placement="top">
+              {value}
+            </Tooltip>
+          )}
+          value={round((100 * attackStat.damageMoveCount) / attackStat.moveCount)}
+          suffix="%"
+        />
       </Col>
       <Col span={4}>
         <Statistic title="Average Damage" value={round(attackStat.damage / attackStat.moveCount)} />
       </Col>
       <Col span={4}>
-        <Statistic title="% w/ +Damage" value={round((100 * attackStat.plusDamageCount) / attackStat.moveCount)} suffix="%" />
+        <Statistic
+          title="% w/ +Damage"
+          formatter={(value) => (
+            <Tooltip title={`${attackStat.plusDamageCount} / ${attackStat.moveCount}`} placement="top">
+              {value}
+            </Tooltip>
+          )}
+          value={round((100 * attackStat.plusDamageCount) / attackStat.moveCount)}
+          suffix="%"
+        />
       </Col>
       <Col span={4}>
-        <Statistic title="% w/ ×Damage" value={round((100 * attackStat.timesDamageCount) / attackStat.moveCount)} suffix="%" />
+        <Statistic
+          title="% w/ ×Damage"
+          formatter={(value) => (
+            <Tooltip title={`${attackStat.timesDamageCount} / ${attackStat.moveCount}`} placement="top">
+              {value}
+            </Tooltip>
+          )}
+          value={round((100 * attackStat.timesDamageCount) / attackStat.moveCount)}
+          suffix="%"
+        />
       </Col>
       <Col span={4}>
-        <Statistic title="% w/ -Damage" value={round((100 * attackStat.minusDamageCount) / attackStat.moveCount)} suffix="%" />
+        <Statistic
+          title="% w/ -Damage"
+          formatter={(value) => (
+            <Tooltip title={`${attackStat.minusDamageCount} / ${attackStat.moveCount}`} placement="top">
+              {value}
+            </Tooltip>
+          )}
+          value={round((100 * attackStat.minusDamageCount) / attackStat.moveCount)}
+          suffix="%"
+        />
       </Col>
     </Row>
     <TypeBar count={attackStat.costTypeStats} />
@@ -57,12 +112,30 @@ const AbilityDisplay = ({ stats }: { stats: PokemonStats }) => (
     </Typography.Title>
     <Row gutter={16}>
       <Col span={4}>
-        <Statistic title="% w/ Abilities" value={round((100 * stats.abilityCounts.total) / stats.count)} suffix="%" />
+        <Statistic
+          title="% w/ Abilities"
+          formatter={(value) => (
+            <Tooltip title={`${stats.abilityCounts.total} / ${stats.count}`} placement="top">
+              {value}
+            </Tooltip>
+          )}
+          value={round((100 * stats.abilityCounts.total) / stats.count)}
+          suffix="%"
+        />
       </Col>
       {
       Object.entries(stats.abilityCounts.individual).map(([typeName, typeCount]) => (
         <Col span={4}>
-          <Statistic title={`% w/ ${typeName}`} value={round((100 * typeCount) / stats.count)} suffix="%" />
+          <Statistic
+            title={`% w/ ${typeName}`}
+            formatter={(value) => (
+              <Tooltip title={`${typeCount} / ${stats.count}`} placement="top">
+                {value}
+              </Tooltip>
+            )}
+            value={round((100 * typeCount) / stats.count)}
+            suffix="%"
+          />
         </Col>
       ))
     }
