@@ -46,6 +46,7 @@ const App = () => {
   const [filterDuplicates, setFilterDuplicates] = useState(false);
   const [filters, setFilters] = useState<Filter[]>([]);
   const [excludeFilters, setExcludeFilters] = useState<Filter[]>([]);
+  const [isGallery, setIsGallery] = useState(false);
 
   useEffect(() => {
     getCardCache().then((updatedCache) => setCache(updatedCache));
@@ -125,7 +126,17 @@ const App = () => {
             key="cards"
             header="Cards"
           >
-            <CardList rowSize={6} cards={cards} />
+            <ManagedFormItem
+              label="Display card images"
+              tooltip="Show card images instead of names"
+              inputs={[{
+                type: 'booleanSelect',
+                prompt: 'Show full card images instead of names',
+                selected: isGallery,
+                setSelected: setIsGallery,
+              }]}
+            />
+            <CardList isGallery={isGallery} rowSize={6} cards={cards} />
           </Collapse.Panel>
         </Collapse>
       </Layout.Content>
