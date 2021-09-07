@@ -35,11 +35,17 @@ const allOrAnyMatch = <T, R>(
     ? anyMatch(sources, targets, predicate)
     : allMatch(sources, targets, predicate));
 
+const exists = (value: any | null | undefined) => (value !== null) && (value !== undefined);
+
 const inRange = (
   value: number,
   min?: number,
   max?: number,
-) => ((min || -Infinity) <= value) && ((max || Infinity) >= value);
+) => {
+  const actualMin = exists(min) ? min as number : -Infinity;
+  const actualMax = exists(max) ? max as number : Infinity;
+  return (actualMin <= value) && (actualMax >= value);
+};
 
 const falseFilter = () => false;
 
