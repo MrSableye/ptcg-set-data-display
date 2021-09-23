@@ -1,9 +1,9 @@
 import { groupBy } from 'lodash';
+import { Cache, initializeCache } from './cache';
 import {
   Ability,
   AncientTrait,
   Attack,
-  Cache,
   Card,
   Images,
   Legalities,
@@ -13,20 +13,6 @@ import {
   Tcgplayer,
   WeaknessOrResistance,
 } from './types';
-
-const getCardCache = async (): Promise<Cache> => {
-  const { default: cache } = await import('./cache.json');
-  return cache as Cache;
-};
-
-const getCardsForSets = (
-  cache: Cache,
-  setIds: string[],
-): Card[] => setIds.reduce((cards, setId) => {
-  const setCards = Object.values(cache.cards[setId] || {});
-
-  return [...cards, ...setCards];
-}, [] as Card[]);
 
 const groupSets = (sets: Set[]) => {
   const groupedSets = groupBy(sets, (set) => set.series);
@@ -43,7 +29,7 @@ const groupSets = (sets: Set[]) => {
     .sort((seriesA, seriesB) => seriesB.releaseDate.localeCompare(seriesA.releaseDate));
 };
 
-export { getCardCache, getCardsForSets, groupSets };
+export { initializeCache, groupSets };
 export type {
   Ability,
   AncientTrait,
