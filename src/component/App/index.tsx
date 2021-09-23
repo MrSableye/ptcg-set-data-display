@@ -5,8 +5,8 @@ import {
 import Icon, { GithubFilled, TwitterOutlined } from '@ant-design/icons';
 import {
   Cache,
-  Card,
-  initializeCache,
+  getCardCache,
+  getCardsForSets,
   groupSets,
 } from 'utility/card';
 import { Filter, filterCards, filterDuplicateCards } from 'utility/filter';
@@ -34,32 +34,32 @@ const IconText = ({ icon, text }: any) => (
 );
 
 const App = () => {
-  const [cache, setCache] = useState<Cache>();
+  const [cache, setCache] = useState<Cache>({
+    cards: {},
+    rarities: [],
+    sets: [],
+    subtypes: [],
+    supertypes: [],
+    types: [],
+  });
   const [setIds, setSetIds] = useState<string[]>([]);
   const [filterDuplicates, setFilterDuplicates] = useState(false);
   const [filters, setFilters] = useState<Filter[]>([]);
   const [excludeFilters, setExcludeFilters] = useState<Filter[]>([]);
   const [isGallery, setIsGallery] = useState(false);
-  const [cards, setCards] = useState<Card[]>([]);
 
   useEffect(() => {
-    initializeCache().then(setCache);
+    getCardCache().then((updatedCache) => setCache(updatedCache));
   }, []);
 
-  useEffect(() => {
-    if (cache) {
-      cache.getCardsInSets(setIds).then(setCards);
-    }
-  }, [cache, setIds]);
-
-  let filteredCards = filterCards(
-    cards,
+  let cards = filterCards(
+    getCardsForSets(cache, setIds),
     filters,
     excludeFilters,
   );
-  filteredCards = filterDuplicates ? filterDuplicateCards(cards) : cards;
+  cards = filterDuplicates ? filterDuplicateCards(cards) : cards;
 
-  const groupedSets = groupSets(cache?.sets || []);
+  const groupedSets = groupSets(cache.sets);
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -108,10 +108,10 @@ const App = () => {
             header="Filters"
           >
             <CardFilter
-              supertypes={cache?.supertypes || []}
-              subtypes={cache?.subtypes || []}
-              types={cache?.types || []}
-              rarities={cache?.rarities || []}
+              supertypes={cache.supertypes}
+              subtypes={cache.subtypes}
+              types={cache.types}
+              rarities={cache.rarities}
               setFilters={setFilters}
               setExcludeFilters={setExcludeFilters}
             />
@@ -120,7 +120,7 @@ const App = () => {
             key="stats"
             header="Stats"
           >
-            <CardStat cards={filteredCards} />
+            <CardStat cards={cards} />
           </Collapse.Panel>
           <Collapse.Panel
             key="cards"
@@ -136,7 +136,7 @@ const App = () => {
                 setSelected: setIsGallery,
               }]}
             />
-            <CardList isGallery={isGallery} rowSize={6} cards={filteredCards} />
+            <CardList isGallery={isGallery} rowSize={6} cards={cards} />
           </Collapse.Panel>
         </Collapse>
       </Layout.Content>

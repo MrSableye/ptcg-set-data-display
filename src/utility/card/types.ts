@@ -103,3 +103,12 @@ export interface Card {
   rules?: Nullable<string[]>;
   ancientTrait?: Nullable<AncientTrait>;
 }
+
+export interface Cache {
+  cards: Record<string, Record<string, Card>>;
+  sets: Set[];
+  types: string[]
+  subtypes: string[];
+  supertypes: string[];
+  rarities: string[];
+}
