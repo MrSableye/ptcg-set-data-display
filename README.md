@@ -16,6 +16,5 @@ The application is available at https://weedl.es/data.
 ### Production Builds
 - Run `npm build`
 - Production files will be in the `build/` directory
-
 ## Contributing
 Feel free to open pull requests/issues as necessary.
