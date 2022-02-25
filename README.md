@@ -2,7 +2,7 @@
 Pokémon TCG Set Data Display is an easy-to-use web application for filtering Pokémon TCG cards and looking at useful statistics on those cards.
 
 ## How to Use
-The application is available at https://weedl.es/data.
+The application is available at https://weedl.es/data. Updates will be made periodically to add new sets.
 
 ## Development
 ### Requirements
