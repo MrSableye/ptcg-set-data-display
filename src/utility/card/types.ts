@@ -72,7 +72,7 @@ export interface Prices {
 export interface Tcgplayer {
   url: string;
   updatedAt: string;
-  prices: Prices;
+  prices?: Prices;
 }
 
 export interface Card {
